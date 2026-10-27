@@ -2,11 +2,13 @@
 // 🎙️ CalmNature — Year 2000 Golden Devotional Songs & Sanctuary API
 // Built for Single Hall Living Room + Alexa Echo
 // Morning List: Sri Venkatesam Manasa Smarami, Hanuman Chalisa,
+//               Maha Mrityunjaya Mantra 108, Shankh Naad & Temple Bells,
 //               Jai Ganesh Deva, Gayatri Mantra 108, Om Jai Jagdish Hare,
 //               Subah Subah Le Shiv Ka Naam, Govinda Govinda, Suprabhatam
-// Daytime & Healing: 174 Hz Pain Relief (Mom's Leg Relief),
-//                    528 Hz Home Cleanse, 432 Hz OM Chanting,
-//                    Tibetan Singing Bowls + Hourly Temple Bell
+// Healing & Space Cleansing: 174 Hz Pain Relief (Mom's Leg Relief),
+//                           417 Hz Space & Mind Cleanser (Break Blockages),
+//                           528 Hz Home Transformation, 432 Hz OM Chanting,
+//                           Tibetan Singing Bowls + Hourly Temple Bell
 // =====================================================================
 
 function getRequestedSong(request) {
@@ -17,6 +19,50 @@ function getRequestedSong(request) {
   }
   const intentName = (request.intent?.name || '').toLowerCase();
   const text = (query + ' ' + intentName).toLowerCase();
+
+  // --- 10-MINUTE MORNING CLEANSING RITUAL ---
+  if (text.includes('ritual') || text.includes('10 minute') || (text.includes('cleanse') && text.includes('morning'))) {
+    return {
+      phase: 'morning_ritual',
+      title: '10-Minute Morning Cleansing Ritual (Maha Mrityunjaya 108)',
+      file: 'devotional/maha-mrityunjaya-mantra-108.mp3',
+      speech: 'Starting your 10-minute home cleansing ritual. Open the windows and curtains to let fresh morning sunlight and air in, and light a small piece of natural camphor or herbal dhoop while Maha Mrityunjaya Mantra cleanses and protects your home.',
+      volume: 45
+    };
+  }
+
+  // --- MAHA MRITYUNJAYA MANTRA (108 TIMES) ---
+  if (text.includes('mrityunjaya') || text.includes('mrutyunjaya') || text.includes('tryambakam') || text.includes('protective mantra') || text.includes('healing mantra')) {
+    return {
+      phase: 'maha_mrityunjaya',
+      title: 'Maha Mrityunjaya Mantra 108 Times (Anuradha Paudwal & Suresh Wadkar)',
+      file: 'devotional/maha-mrityunjaya-mantra-108.mp3',
+      speech: 'Starting Maha Mrityunjaya Mantra 108 Repetitions by Anuradha Paudwal and Suresh Wadkar. The ultimate healing and protective chant to dispel fear and heaviness.',
+      volume: 40
+    };
+  }
+
+  // --- SHANKH (CONCH SHELL) & TEMPLE BELLS SPACE RESET ---
+  if (text.includes('shankh') || text.includes('conch') || text.includes('shankha') || text.includes('blow shankh') || text.includes('space clearing')) {
+    return {
+      phase: 'shankh_naad',
+      title: 'Sacred Shankh Naad & Temple Bells (Space Reset)',
+      file: 'devotional/shankh-and-temple-bell.mp3',
+      speech: 'Blowing the sacred Shankh conch with resonant temple bells to break stagnant air and dead zones in all room corners, resetting your home energy.',
+      volume: 45
+    };
+  }
+
+  // --- 417 HZ SPACE & MIND CLEANSER ---
+  if (text.includes('417') || text.includes('dissolve blockage') || text.includes('space cleanser') || text.includes('clear negative')) {
+    return {
+      phase: 'space_cleanse_417',
+      title: '417 Hz Space & Mind Cleanser (Negative Energy Dissolver)',
+      file: 'healing/417hz-negative-energy-cleanse.mp3',
+      speech: 'Starting 417 Hz Solfeggio frequency to break up negative emotional energy and clear heavy stagnant atmospheres in your home.',
+      volume: 35
+    };
+  }
 
   // --- MOM'S LEG PAIN RELIEF & 174 HZ ---
   if (text.includes('174') || text.includes('pain') || text.includes('leg') || text.includes('mom') || text.includes('mother') || text.includes('healing') || text.includes('muscle') || text.includes('relief')) {
@@ -30,10 +76,10 @@ function getRequestedSong(request) {
   }
 
   // --- 528 HZ HOME CLEANSE & POSITIVE ENERGY ---
-  if (text.includes('528') || text.includes('cleanse') || text.includes('negative') || text.includes('vibe') || text.includes('clean')) {
+  if (text.includes('528') || text.includes('positive energy') || text.includes('vibe') || text.includes('transformation')) {
     return {
       phase: 'home_cleanse_528',
-      title: '528 Hz Negative Energy Cleansing & Home Transformation',
+      title: '528 Hz Transformation & Home Cleanse',
       file: 'healing/528hz-home-cleanse.mp3',
       speech: 'Playing 528 Hz transformation frequency to cleanse and uplift your home with pure positive energy.',
       volume: 35
@@ -247,16 +293,16 @@ function getCurrentPhase(offsetHours = 5.5) {
   const minute = targetTime.getMinutes();
   const timeVal = hour + minute / 60.0;
 
-  // 6:00 AM to 10:00 AM -> Morning Devotional Songs (Sri Venkatesam Manasa Smarami)
+  // 6:00 AM to 10:00 AM -> Morning Devotional Songs (Sri Venkatesam Manasa Smarami & Maha Mrityunjaya)
   if (timeVal >= 6.0 && timeVal < 10.0) {
     return {
       phase: 'morning_devotional',
-      title: 'Sri Venkatesam Manasa Smarami',
+      title: 'Sri Venkatesam Manasa Smarami & Morning Devotion',
       file: 'devotional/sri-venkatesam-manasa-smarami.mp3',
       speech: 'Good morning! Starting Sri Venkatesam Manasa Smarami and your morning devotional songs. Have a blessed and prosperous day.',
       volume: 40
     };
-  // 10:00 AM to 6:00 PM -> Daytime Healing & Pain Relief (174 Hz / 528 Hz) + Hourly Bell
+  // 10:00 AM to 6:00 PM -> Daytime Healing & Pain Relief (174 Hz / 417 Hz / 528 Hz) + Hourly Bell
   } else if (timeVal >= 10.0 && timeVal < 18.0) {
     return {
       phase: 'daytime_healing',
@@ -320,14 +366,12 @@ export default function handler(req, res) {
       streamUrl: audioUrl,
       hourlyChimeUrl: bellUrl,
       flagshipSong: 'Sri Venkatesam Manasa Smarami',
-      momPainReliefTrack: '174 Hz Deep Pain Relief & Muscle Relaxation',
-      jiosaavnTracks: [
-        'Shree Hanuman Chalisa (Hariharan)',
-        'Jai Ganesh Deva (Anuradha Paudwal)',
-        'Gayatri Mantra 108 Times',
-        'Om Jai Jagdish Hare',
-        'Subah Subah Le Shiv Ka Naam'
-      ]
+      cleansingSounds: {
+        mahaMrityunjaya: 'Maha Mrityunjaya Mantra 108 Times (Healing & Protective)',
+        shankhNaad: 'Shankh Naad & Temple Bells (Acoustic Space Reset)',
+        hz417: '417 Hz Space & Mind Cleanser (Break Blockages)'
+      },
+      morningRitual: 'Open Windows + 417Hz / Maha Mrityunjaya + Natural Camphor/Dhoop'
     });
   }
 

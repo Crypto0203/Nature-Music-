@@ -1,6 +1,6 @@
 import React, { useState, useRef } from 'react';
 import { motion } from 'framer-motion';
-import { Play, Pause, Volume2, Bell, Clock, Sun, Moon, Flame, Sunrise, Heart, Sparkles, Shield, Activity } from 'lucide-react';
+import { Play, Pause, Volume2, Bell, Clock, Sun, Moon, Flame, Sunrise, Heart, Sparkles, Shield, Activity, Wind } from 'lucide-react';
 
 interface DevotionalSong {
   id: string;
@@ -10,6 +10,18 @@ interface DevotionalSong {
   file: string;
   durationHint: string;
   featured?: boolean;
+}
+
+interface CleansingSound {
+  id: string;
+  title: string;
+  category: string;
+  whyPowerful: string;
+  effect: string;
+  file: string;
+  bestTime: string;
+  icon: string;
+  badge: string;
 }
 
 interface HealingTrack {
@@ -24,7 +36,6 @@ interface HealingTrack {
 }
 
 const HIT_DEVOTIONAL_SONGS: DevotionalSong[] = [
-  // --- FLAGSHIP SONGS ---
   {
     id: 'manasa_smarami',
     title: 'Sri Venkatesam Manasa Smarami',
@@ -32,6 +43,24 @@ const HIT_DEVOTIONAL_SONGS: DevotionalSong[] = [
     tag: 'Year 2000 Golden Master Song',
     file: '/audio/devotional/sri-venkatesam-manasa-smarami.mp3',
     durationHint: 'Full Master (16 MB)',
+    featured: true,
+  },
+  {
+    id: 'maha_mrityunjaya',
+    title: 'Maha Mrityunjaya Mantra (108 Times)',
+    artist: 'Anuradha Paudwal & Suresh Wadkar',
+    tag: 'Ultimate Protective & Healing Chant',
+    file: '/audio/devotional/maha-mrityunjaya-mantra-108.mp3',
+    durationHint: '108 Recitations',
+    featured: true,
+  },
+  {
+    id: 'shankh_naad',
+    title: 'Sacred Shankh Naad & Temple Bells',
+    artist: 'Vedic Conch & Resonant Bronze Chimes',
+    tag: 'Instant Acoustic Dead-Zone Breaker',
+    file: '/audio/devotional/shankh-and-temple-bell.mp3',
+    durationHint: 'Corner Space Reset',
     featured: true,
   },
   {
@@ -134,6 +163,42 @@ const HIT_DEVOTIONAL_SONGS: DevotionalSong[] = [
   },
 ];
 
+const CLEANSING_SOUNDS: CleansingSound[] = [
+  {
+    id: 'maha_mrityunjaya_cleanse',
+    title: 'Maha Mrityunjaya Mantra (108 Repetitions)',
+    category: 'A. Sacred Sanskrit Protection',
+    whyPowerful: 'The ultimate healing and protective chant. The rhythmic acoustic meter dispels feelings of fear, illness, and heaviness.',
+    effect: 'Produces grounding low-to-mid vibrational frequencies that clear stagnant room energy.',
+    file: '/audio/devotional/maha-mrityunjaya-mantra-108.mp3',
+    bestTime: 'Early Morning (Sunrise) or Sunset',
+    icon: '🕉️',
+    badge: '108 Repetitions',
+  },
+  {
+    id: 'shankh_temple_bells',
+    title: 'The Sound of the Shankh & Temple Bells',
+    category: 'B. Acoustic Physics Resonance',
+    whyPowerful: 'Traditional temple bells and the blowing of a Shankh (conch) produce an intense acoustic burst with rich overtones lasting 7+ seconds.',
+    effect: 'Sharp resonant acoustic pulses physically break standing wave dead-zones and stagnant air in corners, instantly resetting the room’s vibe.',
+    file: '/audio/devotional/shankh-and-temple-bell.mp3',
+    bestTime: 'Morning Pooja / Space Reset',
+    icon: '🐚',
+    badge: '7s+ Acoustic Burst',
+  },
+  {
+    id: 'hz_417_cleanse',
+    title: '417 Hz Space & Mind Cleanser',
+    category: 'C. Solfeggio Vibration Therapy',
+    whyPowerful: 'Specifically designated in sound therapy to break up negative emotional energy and dissolve deep mental/energetic blockages.',
+    effect: 'Disperses heavy, stagnant home atmospheres and restores clear, uplifting vitality.',
+    file: '/audio/healing/417hz-negative-energy-cleanse.mp3',
+    bestTime: 'Daytime / Whole House Play',
+    icon: '🌀',
+    badge: '417 Hz Solfeggio',
+  },
+];
+
 const HEALING_TRACKS: HealingTrack[] = [
   {
     id: 'pain_relief_174',
@@ -226,7 +291,7 @@ export default function SanctuaryPlayer() {
   const [isPlaying, setIsPlaying] = useState(false);
   const [volume, setVolume] = useState(0.40);
   const [bellRinging, setBellRinging] = useState(false);
-  const [activeTab, setActiveTab] = useState<'devotional' | 'healing' | 'schedule'>('devotional');
+  const [activeTab, setActiveTab] = useState<'devotional' | 'cleansing' | 'healing' | 'schedule'>('devotional');
 
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const bellAudioRef = useRef<HTMLAudioElement | null>(null);
@@ -290,7 +355,7 @@ export default function SanctuaryPlayer() {
             </span>
           </div>
           <p className="text-xs text-[#90CAF9]/80">
-            Featuring <strong>Sri Venkatesam Manasa Smarami</strong>, Hanuman Chalisa, JioSaavn Morning Hits, 174 Hz Leg Pain Relief & Hourly Bronze Bell.
+            Featuring <strong>Sri Venkatesam Manasa Smarami</strong>, Hanuman Chalisa, 3 Powerful Cleansing Sounds (Maha Mrityunjaya, Shankh Naad, 417 Hz) & Mom's 174 Hz Leg Relief.
           </p>
         </div>
 
@@ -306,6 +371,17 @@ export default function SanctuaryPlayer() {
               }`}
             >
               Morning Devotional ({HIT_DEVOTIONAL_SONGS.length})
+            </button>
+            <button
+              onClick={() => setActiveTab('cleansing')}
+              className={`px-3 py-1.5 rounded-lg font-bold transition-all flex items-center gap-1.5 ${
+                activeTab === 'cleansing'
+                  ? 'bg-gradient-to-r from-amber-400 via-orange-500 to-yellow-400 text-black shadow'
+                  : 'text-amber-300 hover:text-white'
+              }`}
+            >
+              <Sparkles size={13} className="fill-current text-amber-300" />
+              <span>3 Cleansing Sounds</span>
             </button>
             <button
               onClick={() => setActiveTab('healing')}
@@ -431,7 +507,131 @@ export default function SanctuaryPlayer() {
         </div>
       )}
 
-      {/* TAB 2: Mom's Leg Pain Relief & Sound Therapy */}
+      {/* TAB 2: The 3 Most Powerful Sounds for Home Cleansing + 10-Minute Ritual */}
+      {activeTab === 'cleansing' && (
+        <div className="space-y-6 mb-6">
+          {/* 10-Minute Morning Ritual Card */}
+          <div className="p-5 rounded-2xl bg-gradient-to-r from-amber-950/50 via-orange-950/40 to-black/70 border border-amber-500/40 relative overflow-hidden">
+            <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-4 mb-4">
+              <div>
+                <div className="flex items-center gap-2 text-amber-300 font-bold text-base mb-1">
+                  <Sunrise className="w-5 h-5 text-amber-400" />
+                  <span>The 10-Minute Morning Ritual for Maximum Positive Energy</span>
+                </div>
+                <p className="text-xs text-white/80 max-w-3xl leading-relaxed">
+                  Combine acoustic sound waves with simple physical actions for 3 to 5 days. The entire home will feel noticeably lighter, peaceful, and refreshed.
+                </p>
+              </div>
+
+              <button
+                onClick={() => playSong('/audio/devotional/maha-mrityunjaya-mantra-108.mp3', '10-Minute Morning Cleansing Ritual (Maha Mrityunjaya 108)')}
+                className="px-5 py-2.5 rounded-xl bg-gradient-to-r from-amber-400 via-orange-500 to-amber-500 text-black font-extrabold text-xs shadow-lg hover:brightness-110 shrink-0 flex items-center gap-2"
+              >
+                <Play size={14} className="fill-current" />
+                <span>Start 10-Min Ritual Audio</span>
+              </button>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-3 text-xs">
+              <div className="p-3.5 rounded-xl bg-black/40 border border-white/10">
+                <div className="flex items-center gap-2 text-amber-300 font-bold mb-1">
+                  <Wind size={15} />
+                  <span>1. Open Windows & Curtains</span>
+                </div>
+                <p className="text-[11px] text-white/70">
+                  Stagnant energy gathers in closed, dark rooms. Open windows to let fresh morning air and natural sunlight into every room.
+                </p>
+              </div>
+
+              <div className="p-3.5 rounded-xl bg-black/40 border border-white/10">
+                <div className="flex items-center gap-2 text-amber-300 font-bold mb-1">
+                  <Volume2 size={15} />
+                  <span>2. Play Across Whole House</span>
+                </div>
+                <p className="text-[11px] text-white/70">
+                  Play Maha Mrityunjaya or 417 Hz via your living room speaker or Alexa. Keep volume slightly higher (50–60%) for the first 15 mins so vibrations echo into every corner.
+                </p>
+              </div>
+
+              <div className="p-3.5 rounded-xl bg-black/40 border border-white/10">
+                <div className="flex items-center gap-2 text-amber-300 font-bold mb-1">
+                  <Flame size={15} />
+                  <span>3. Camphor / Dhoop Fragrance</span>
+                </div>
+                <p className="text-[11px] text-white/70">
+                  Light a small piece of natural camphor (Karpura) or herbal dhoop while sound plays to pair acoustic clearing with olfactory purification.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          {/* The 3 Most Powerful Sounds Grid */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            {CLEANSING_SOUNDS.map((cs) => {
+              const isThisPlaying = currentPlayingTitle === cs.title && isPlaying;
+              return (
+                <motion.div
+                  key={cs.id}
+                  whileHover={{ scale: 1.02 }}
+                  className={`p-5 rounded-2xl border flex flex-col justify-between transition-all ${
+                    isThisPlaying
+                      ? 'bg-amber-950/60 border-amber-400 shadow-[0_0_30px_rgba(251,191,36,0.35)]'
+                      : 'bg-gradient-to-br from-amber-500/10 via-black/40 to-black/60 border-amber-500/30 hover:border-amber-400'
+                  }`}
+                >
+                  <div>
+                    <div className="flex items-center justify-between mb-3">
+                      <span className="text-2xl p-2 rounded-xl bg-black/50 border border-white/10">{cs.icon}</span>
+                      <span className="text-[10px] font-bold text-amber-300 bg-amber-400/10 px-2.5 py-1 rounded-md border border-amber-400/20">
+                        {cs.badge}
+                      </span>
+                    </div>
+
+                    <span className="text-[10px] uppercase tracking-wider font-extrabold text-amber-400/90">{cs.category}</span>
+                    <h4 className="font-bold text-base text-white mt-0.5 mb-2">{cs.title}</h4>
+
+                    <div className="space-y-2 mb-4 text-[11px]">
+                      <p className="text-white/80 leading-relaxed">
+                        <strong className="text-amber-200">Why it's powerful:</strong> {cs.whyPowerful}
+                      </p>
+                      <p className="text-white/70 leading-relaxed">
+                        <strong className="text-amber-200">Acoustic Effect:</strong> {cs.effect}
+                      </p>
+                      <div className="flex items-center gap-1.5 text-[10px] text-amber-300/90 font-medium pt-1">
+                        <Clock size={12} />
+                        <span>Best Time: {cs.bestTime}</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <button
+                    onClick={() => playSong(cs.file, cs.title)}
+                    className={`w-full py-2.5 px-3 rounded-xl flex items-center justify-center gap-2 text-xs font-extrabold transition-all shadow-md ${
+                      isThisPlaying
+                        ? 'bg-gradient-to-r from-red-500 to-pink-500 text-white'
+                        : 'bg-gradient-to-r from-amber-400 via-orange-500 to-amber-500 text-black hover:brightness-110'
+                    }`}
+                  >
+                    {isThisPlaying ? (
+                      <>
+                        <Pause size={14} className="fill-current" />
+                        <span>Pause Sound</span>
+                      </>
+                    ) : (
+                      <>
+                        <Play size={14} className="fill-current" />
+                        <span>Play Cleansing Sound</span>
+                      </>
+                    )}
+                  </button>
+                </motion.div>
+              );
+            })}
+          </div>
+        </div>
+      )}
+
+      {/* TAB 3: Mom's Leg Pain Relief & Sound Therapy */}
       {activeTab === 'healing' && (
         <div className="space-y-6 mb-6">
           {/* Compassionate Guide Card for Mom */}
@@ -506,7 +706,7 @@ export default function SanctuaryPlayer() {
         </div>
       )}
 
-      {/* TAB 3: 24-Hour Home Sanctuary Schedule */}
+      {/* TAB 4: 24-Hour Home Sanctuary Schedule */}
       {activeTab === 'schedule' && (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
           {SCHEDULE_TRACKS.map((t) => {
@@ -570,10 +770,11 @@ export default function SanctuaryPlayer() {
 
         <div className="flex flex-wrap items-center gap-2 text-white/80 text-[11px]">
           <span className="font-semibold text-[#FFD700]">Alexa Echo Voice Commands:</span>
+          <span className="bg-white/5 px-2 py-0.5 rounded border border-white/10">"Alexa, ask Calm Nature to start morning ritual"</span>
+          <span className="bg-white/5 px-2 py-0.5 rounded border border-white/10">"Alexa, ask Calm Nature to blow Shankh"</span>
+          <span className="bg-white/5 px-2 py-0.5 rounded border border-white/10">"Alexa, ask Calm Nature to play Maha Mrityunjaya"</span>
+          <span className="bg-white/5 px-2 py-0.5 rounded border border-white/10">"Alexa, ask Calm Nature to play 417 Hz"</span>
           <span className="bg-white/5 px-2 py-0.5 rounded border border-white/10">"Alexa, ask Calm Nature to play pain relief"</span>
-          <span className="bg-white/5 px-2 py-0.5 rounded border border-white/10">"Alexa, ask Calm Nature to play 174 Hz"</span>
-          <span className="bg-white/5 px-2 py-0.5 rounded border border-white/10">"Alexa, ask Calm Nature to play Hanuman Chalisa"</span>
-          <span className="bg-white/5 px-2 py-0.5 rounded border border-white/10">"Alexa, ask Calm Nature to play Sri Venkatesam Manasa Smarami"</span>
         </div>
       </div>
     </motion.div>
