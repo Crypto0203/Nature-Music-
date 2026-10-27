@@ -5,6 +5,7 @@ import { useAppStore } from '../store';
 import { Mood } from '../types';
 import { hapticTap } from '../native/capacitor';
 import StarField from './StarField';
+import SanctuaryPlayer from './SanctuaryPlayer';
 
 export default function MoodScreen() {
   const { selectMood, setScreen, customMixes, playCustomMix } = useAppStore();
@@ -60,6 +61,9 @@ export default function MoodScreen() {
             <NavButton icon={<Settings size={18} />} label="Settings" onClick={() => setScreen('settings')} />
           </div>
         </motion.div>
+
+        {/* 24-Hour Home Sanctuary & 90s Devotional Radio */}
+        <SanctuaryPlayer />
 
         {/* Welcome */}
         <motion.div

@@ -45,3 +45,5 @@ ffmpeg-8.1/
 *.zip
 android/build/
 android/app/build/
+
+.vercel
