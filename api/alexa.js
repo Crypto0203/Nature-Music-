@@ -2,23 +2,24 @@
 // 🎙️ CalmNature — Year 2000 Golden Devotional Songs & Sanctuary API
 // Built for Single Hall Living Room + Alexa Echo
 //
-// JIOSAAVN & GOLDEN DEVOTIONAL TRACKS:
-//  1. Shree Hanuman Chalisa (Hariharan)
-//  2. Gayatri Mantra 108 Times
-//  3. Maha Mrityunjaya Mantra 108 Times (Suresh Wadkar)
-//  4. Sri Venkateswara Suprabhatam (M. S. Subbulakshmi)
-//  5. Vishnu Sahasranamam (M. S. Subbulakshmi)
-//  6. Jai Ganesh Deva (Anuradha Paudwal)
-//  7. Om Jai Jagdish Hare
-//  8. Subah Subah Le Shiv Ka Naam
-//  9. Sri Venkatesam Manasa Smarami (Flagship 2000 Master)
-// 10. Govinda Govinda Yani Koluvare
+// PLAYLIST ORDER:
+//  1. Sri Venkateswara Suprabhatam (M. S. Subbulakshmi) [1ST SONG]
+//  2. Jai Ganesh Deva (Anuradha Paudwal) [NEXT SONG]
+//  3. Sri Venkatesam Manasa Smarami (Flagship 2000 Master)
+//  4. Shree Hanuman Chalisa (Hariharan)
+//  5. Om Jai Jagdish Hare (Anuradha Paudwal)
+//  6. Vishnu Sahasranamam (M. S. Subbulakshmi)
+//  7. Brahmam Okate (Thandanana)
+//  8. Muddugare Yashoda
+//  9. Kondalalo Nelakonna
+// 10. Adivo Alladivo
+// 11. Sriman Narayana
 //
-// CLEANSING FREQUENCIES:
-//  - 174 Hz Mom Pain Relief & Deep Rest
-//  - 417 Hz Negative Energy Dissolver
-//  - 528 Hz Home Harmony & Positive Vibe
-//  - Sacred Shankh Naad & Temple Bells
+// MANTRAS AT THE END:
+// 12. Shiva Tandava Stotram (Most Powerful Shiva Mantra)
+// 13. Maha Mrityunjaya Mantra 108 Times (Suresh Wadkar & Anuradha Paudwal)
+// 14. Gayatri Mantra 108 Times (Anuradha Paudwal)
+// 15. Sacred Shankh Naad & Temple Bells (Acoustic Space Reset)
 // =====================================================================
 
 function getRequestedSong(request) {
@@ -30,24 +31,46 @@ function getRequestedSong(request) {
   const intentName = (request.intent?.name || '').toLowerCase();
   const text = (query + ' ' + intentName).toLowerCase();
 
-  // --- 10-MINUTE MORNING CLEANSING RITUAL ---
-  if (text.includes('ritual') || text.includes('10 minute') || (text.includes('cleanse') && text.includes('morning'))) {
+  // --- 1. SUPRABHATAM (1ST SONG) ---
+  if (text.includes('suprabhatam') || text.includes('subbulakshmi') || text.includes('first song') || text.includes('1st song') || text.includes('balaji')) {
     return {
-      phase: 'morning_ritual',
-      title: '10-Minute Morning Cleansing Ritual (Maha Mrityunjaya 108)',
-      file: 'devotional/maha-mrityunjaya-mantra-108.mp3',
-      speech: 'Starting your 10-minute home cleansing ritual. Open the windows and curtains to let fresh morning sunlight and air in, and light a small piece of natural camphor or herbal dhoop while Maha Mrityunjaya Mantra cleanses and protects your home.',
-      volume: 45
+      phase: 'suprabhatam',
+      title: 'Sri Venkateswara Suprabhatam (M. S. Subbulakshmi)',
+      file: 'devotional/suprabhatam.mp3',
+      speech: 'Good morning! Starting M. S. Subbulakshmi’s legendary Sri Venkateswara Suprabhatam, your first morning awakening puja.',
+      volume: 40
     };
   }
 
-  // --- VISHNU SAHASRANAMAM (M. S. SUBBULAKSHMI) ---
-  if (text.includes('sahasranamam') || text.includes('vishnu sahasra') || text.includes('subbulakshmi sahasranamam') || text.includes('ancient shield')) {
+  // --- 2. JAI GANESH DEVA (NEXT SONG) ---
+  if (text.includes('ganesh') || text.includes('ganpati') || text.includes('jai ganesh') || text.includes('second song') || text.includes('next song')) {
     return {
-      phase: 'vishnu_sahasranamam',
-      title: 'Vishnu Sahasranamam (M. S. Subbulakshmi)',
-      file: 'devotional/vishnu-sahasranamam.mp3',
-      speech: 'Starting Vishnu Sahasranamam sung by M. S. Subbulakshmi. An ancient shield of divine positivity and protection for your home.',
+      phase: 'jai_ganesh_deva',
+      title: 'Jai Ganesh Deva (Anuradha Paudwal)',
+      file: 'devotional/jai-ganesh-deva.mp3',
+      speech: 'Playing Jai Ganesh Deva Aarti by Anuradha Paudwal. Ganpati Bappa Morya.',
+      volume: 40
+    };
+  }
+
+  // --- 3. SRI VENKATESAM MANASA SMARAMI ---
+  if (text.includes('smarami') || text.includes('manasa') || text.includes('venkatesam') || text.includes('srinivasam')) {
+    return {
+      phase: 'manasa_smarami',
+      title: 'Sri Venkatesam Manasa Smarami',
+      file: 'devotional/sri-venkatesam-manasa-smarami.mp3',
+      speech: 'Starting Sri Venkatesam Manasa Smarami, Sri Srinivasam Sritha Parijatham. Have a blessed and auspicious day.',
+      volume: 40
+    };
+  }
+
+  // --- SHIVA TANDAVA STOTRAM (MOST POWERFUL SHIVA MANTRA) ---
+  if (text.includes('shiva') || text.includes('tandav') || text.includes('tandava') || text.includes('shiva mantra') || text.includes('bholenath') || text.includes('mahadev')) {
+    return {
+      phase: 'shiva_tandava',
+      title: 'Shiva Tandava Stotram (Most Powerful Shiva Mantra)',
+      file: 'devotional/shiva-tandava-stotram.mp3',
+      speech: 'Starting the most powerful Shiva chant: Shiva Tandava Stotram. Invoking immense positive strength, divine courage, and removing all negative energies.',
       volume: 40
     };
   }
@@ -63,7 +86,51 @@ function getRequestedSong(request) {
     };
   }
 
-  // --- SHANKH (CONCH SHELL) & TEMPLE BELLS SPACE RESET ---
+  // --- VISHNU SAHASRANAMAM ---
+  if (text.includes('sahasranamam') || text.includes('vishnu sahasra') || text.includes('ancient shield')) {
+    return {
+      phase: 'vishnu_sahasranamam',
+      title: 'Vishnu Sahasranamam (M. S. Subbulakshmi)',
+      file: 'devotional/vishnu-sahasranamam.mp3',
+      speech: 'Starting Vishnu Sahasranamam sung by M. S. Subbulakshmi. An ancient shield of divine positivity and protection for your home.',
+      volume: 40
+    };
+  }
+
+  // --- HANUMAN CHALISA ---
+  if (text.includes('hanuman') || text.includes('chalisa') || text.includes('hariharan') || text.includes('bajrangbali')) {
+    return {
+      phase: 'hanuman_chalisa',
+      title: 'Shree Hanuman Chalisa (Hariharan)',
+      file: 'devotional/hanuman-chalisa-hariharan.mp3',
+      speech: 'Starting Shree Hanuman Chalisa sung by Hariharan. Jai Bajrangbali.',
+      volume: 40
+    };
+  }
+
+  // --- OM JAI JAGDISH HARE ---
+  if (text.includes('jagdish') || text.includes('om jai jagdish') || text.includes('vishnu aarti')) {
+    return {
+      phase: 'om_jai_jagdish_hare',
+      title: 'Om Jai Jagdish Hare (Anuradha Paudwal)',
+      file: 'devotional/om-jai-jagdish-hare.mp3',
+      speech: 'Playing Om Jai Jagdish Hare Aarti by Anuradha Paudwal.',
+      volume: 40
+    };
+  }
+
+  // --- GAYATRI MANTRA 108 ---
+  if (text.includes('gayatri') || text.includes('108') || text.includes('gayatri mantra')) {
+    return {
+      phase: 'gayatri_mantra_108',
+      title: 'Gayatri Mantra 108 Times (Anuradha Paudwal)',
+      file: 'devotional/gayatri-mantra-108.mp3',
+      speech: 'Starting Gayatri Mantra 108 Times for supreme mental clarity and peace.',
+      volume: 40
+    };
+  }
+
+  // --- SHANKH (CONCH SHELL) & TEMPLE BELLS ---
   if (text.includes('shankh') || text.includes('conch') || text.includes('shankha') || text.includes('blow shankh') || text.includes('space clearing')) {
     return {
       phase: 'shankh_naad',
@@ -74,18 +141,7 @@ function getRequestedSong(request) {
     };
   }
 
-  // --- 417 HZ SPACE & MIND CLEANSER ---
-  if (text.includes('417') || text.includes('dissolve blockage') || text.includes('space cleanser') || text.includes('negative energy dissolver')) {
-    return {
-      phase: 'space_cleanse_417',
-      title: '417 Hz Negative Energy Dissolver & Space Cleanser',
-      file: 'healing/417hz-negative-energy-cleanse.mp3',
-      speech: 'Starting 417 Hz Solfeggio frequency to break up negative emotional energy and clear heavy stagnant atmospheres in your home.',
-      volume: 35
-    };
-  }
-
-  // --- MOM'S LEG PAIN RELIEF & 174 HZ ---
+  // --- MOM'S LEG PAIN RELIEF (174 HZ) ---
   if (text.includes('174') || text.includes('pain') || text.includes('leg') || text.includes('mom') || text.includes('mother') || text.includes('muscle') || text.includes('relief') || text.includes('deep rest')) {
     return {
       phase: 'pain_relief_174',
@@ -96,7 +152,18 @@ function getRequestedSong(request) {
     };
   }
 
-  // --- 528 HZ HOME HARMONY & POSITIVE VIBE ---
+  // --- 417 HZ NEGATIVE ENERGY DISSOLVER ---
+  if (text.includes('417') || text.includes('dissolve blockage') || text.includes('space cleanser') || text.includes('negative energy dissolver')) {
+    return {
+      phase: 'space_cleanse_417',
+      title: '417 Hz Negative Energy Dissolver & Space Cleanser',
+      file: 'healing/417hz-negative-energy-cleanse.mp3',
+      speech: 'Starting 417 Hz Solfeggio frequency to break up negative emotional energy and clear heavy stagnant atmospheres in your home.',
+      volume: 30
+    };
+  }
+
+  // --- 528 HZ HOME HARMONY ---
   if (text.includes('528') || text.includes('positive energy') || text.includes('positive vibe') || text.includes('harmony') || text.includes('transformation')) {
     return {
       phase: 'home_cleanse_528',
@@ -129,88 +196,7 @@ function getRequestedSong(request) {
     };
   }
 
-  // --- JIOSAAVN TOP DEVOTIONAL MORNING SONGS ---
-  if (text.includes('hanuman') || text.includes('chalisa') || text.includes('hariharan') || text.includes('bajrangbali')) {
-    return {
-      phase: 'hanuman_chalisa',
-      title: 'Shree Hanuman Chalisa (Hariharan)',
-      file: 'devotional/hanuman-chalisa-hariharan.mp3',
-      speech: 'Starting Shree Hanuman Chalisa sung by Hariharan. Jai Bajrangbali.',
-      volume: 40
-    };
-  }
-
-  if (text.includes('ganesh') || text.includes('ganpati') || text.includes('jai ganesh')) {
-    return {
-      phase: 'jai_ganesh_deva',
-      title: 'Jai Ganesh Deva (Anuradha Paudwal)',
-      file: 'devotional/jai-ganesh-deva.mp3',
-      speech: 'Playing Jai Ganesh Deva Aarti by Anuradha Paudwal. Ganpati Bappa Morya.',
-      volume: 40
-    };
-  }
-
-  if (text.includes('gayatri') || text.includes('108') || text.includes('gayatri mantra')) {
-    return {
-      phase: 'gayatri_mantra_108',
-      title: 'Gayatri Mantra 108 Times (Anuradha Paudwal)',
-      file: 'devotional/gayatri-mantra-108.mp3',
-      speech: 'Starting Gayatri Mantra 108 Times for supreme mental clarity and peace.',
-      volume: 40
-    };
-  }
-
-  if (text.includes('jagdish') || text.includes('om jai jagdish') || text.includes('vishnu aarti')) {
-    return {
-      phase: 'om_jai_jagdish_hare',
-      title: 'Om Jai Jagdish Hare (Anuradha Paudwal)',
-      file: 'devotional/om-jai-jagdish-hare.mp3',
-      speech: 'Playing Om Jai Jagdish Hare Aarti by Anuradha Paudwal.',
-      volume: 40
-    };
-  }
-
-  if (text.includes('subah') || text.includes('shiv') || text.includes('bholenath') || text.includes('shiva')) {
-    return {
-      phase: 'subah_subah_le_shiv',
-      title: 'Subah Subah Le Shiv Ka Naam (Hariharan)',
-      file: 'devotional/subah-subah-le-shiv-ka-naam.mp3',
-      speech: 'Playing Subah Subah Le Shiv Ka Naam by Hariharan. Har Har Mahadev.',
-      volume: 40
-    };
-  }
-
-  // --- YEAR 2000 GOLDEN TELUGU DEVOTIONAL HITS ---
-  if (text.includes('smarami') || text.includes('manasa') || text.includes('venkatesam') || text.includes('srinivasam')) {
-    return {
-      phase: 'manasa_smarami',
-      title: 'Sri Venkatesam Manasa Smarami',
-      file: 'devotional/sri-venkatesam-manasa-smarami.mp3',
-      speech: 'Starting Sri Venkatesam Manasa Smarami, Sri Srinivasam Sritha Parijatham. Have a blessed and auspicious day.',
-      volume: 40
-    };
-  }
-
-  if (text.includes('koluvare') || text.includes('govinda govinda')) {
-    return {
-      phase: 'govinda_koluvare',
-      title: 'Govinda Govinda Yani Koluvare',
-      file: 'devotional/govinda-govinda-yani-koluvare.mp3',
-      speech: 'Playing Govinda Govinda Yani Koluvare, Annamacharya Sankeertana.',
-      volume: 40
-    };
-  }
-
-  if (text.includes('suprabhatam') || text.includes('subbulakshmi') || text.includes('balaji')) {
-    return {
-      phase: 'suprabhatam',
-      title: 'Sri Venkateswara Suprabhatam (M. S. Subbulakshmi)',
-      file: 'devotional/suprabhatam.mp3',
-      speech: 'Good morning! Starting M.S. Subbulakshmi’s legendary Sri Venkateswara Suprabhatam.',
-      volume: 40
-    };
-  }
-
+  // --- ANNAMACHARYA DEVOTIONAL CLASSICS ---
   if (text.includes('brahmam') || text.includes('thandanana')) {
     return {
       phase: 'brahmam_okate',
@@ -261,13 +247,24 @@ function getRequestedSong(request) {
     };
   }
 
+  // --- 10-MINUTE MORNING CLEANSING RITUAL ---
+  if (text.includes('ritual') || text.includes('10 minute') || (text.includes('cleanse') && text.includes('morning'))) {
+    return {
+      phase: 'morning_ritual',
+      title: '10-Minute Morning Cleansing Ritual (Maha Mrityunjaya 108)',
+      file: 'devotional/maha-mrityunjaya-mantra-108.mp3',
+      speech: 'Starting your 10-minute home cleansing ritual. Open the windows and curtains to let fresh morning sunlight and air in, and light a small piece of natural camphor or herbal dhoop while Maha Mrityunjaya Mantra cleanses and protects your home.',
+      volume: 45
+    };
+  }
+
   // --- GENERAL COMMANDS ---
   if (text.includes('2000') || text.includes('90') || text.includes('devotion') || text.includes('god song') || text.includes('bhajan') || text.includes('morning song') || text.includes('morning list')) {
     return {
-      phase: 'manasa_smarami',
-      title: 'Sri Venkatesam Manasa Smarami',
-      file: 'devotional/sri-venkatesam-manasa-smarami.mp3',
-      speech: 'Playing your golden morning devotional song: Sri Venkatesam Manasa Smarami.',
+      phase: 'suprabhatam',
+      title: 'Sri Venkateswara Suprabhatam',
+      file: 'devotional/suprabhatam.mp3',
+      speech: 'Starting your morning devotional playlist with M. S. Subbulakshmi’s Sri Venkateswara Suprabhatam, followed by Jai Ganesh Deva.',
       volume: 40
     };
   }
@@ -316,13 +313,13 @@ function getCurrentPhase(offsetHours = 5.5) {
   const timeVal = hour + minute / 60.0;
 
   // Phase 1: Morning (6:00 AM – 8:00 AM) — Awakening & Protection
-  // Suprabhatam, Sri Venkatesam Manasa Smarami, Vishnu Sahasranamam, Gayatri Mantra
+  // 1st song is Suprabhatam, then Jai Ganesh Deva, Sri Venkatesam Manasa Smarami, and mantras at the end
   if (timeVal >= 6.0 && timeVal < 8.0) {
     return {
       phase: 'morning_awakening',
-      title: 'Morning Awakening & Protection (M. S. Subbulakshmi Suprabhatam)',
+      title: 'Sri Venkateswara Suprabhatam (M. S. Subbulakshmi)',
       file: 'devotional/suprabhatam.mp3',
-      speech: 'Good morning! Starting your Morning Awakening & Protection with M. S. Subbulakshmi’s sacred Suprabhatam. Have a blessed and auspicious day.',
+      speech: 'Good morning! Starting your 6:00 AM morning awakening with M. S. Subbulakshmi’s Sri Venkateswara Suprabhatam, followed by Jai Ganesh Deva and your sacred morning mantras. Have a blessed and auspicious day.',
       volume: 40
     };
   // Phase 2: Daytime / Afternoon (8:00 AM – 6:00 PM) — Calm Focus, Space Cleansing & Rest
@@ -332,7 +329,7 @@ function getCurrentPhase(offsetHours = 5.5) {
       phase: 'afternoon_calm',
       title: 'Afternoon Calm Focus & 528 Hz Home Harmony',
       file: 'healing/528hz-home-cleanse.mp3',
-      speech: 'Starting your Daytime Calm Focus and 528 Hz Home Harmony soundscape. Hourly bronze temple bell chimes will ring every hour to reset positive energy.',
+      speech: 'Starting your Daytime Calm Focus and 528 Hz Home Harmony soundscape. Hourly bronze temple bell chimes will ring every hour on the hour to reset positive energy.',
       volume: 30
     };
   // Phase 3: Evening Sandhya (6:00 PM – 7:30 PM) — Clearing Negative Energy
@@ -391,33 +388,25 @@ export default function handler(req, res) {
       currentPhase: current,
       streamUrl: audioUrl,
       hourlyChimeUrl: bellUrl,
-      flagshipSong: 'Sri Venkatesam Manasa Smarami',
-      jiosaavnTracks: [
-        'Shree Hanuman Chalisa (Hariharan)',
-        'Gayatri Mantra 108 Times',
-        'Maha Mrityunjaya Mantra 108 Times (Suresh Wadkar)',
-        'Sri Venkateswara Suprabhatam (M. S. Subbulakshmi)',
-        'Vishnu Sahasranamam (M. S. Subbulakshmi)',
-        'Jai Ganesh Deva (Anuradha Paudwal)',
-        'Om Jai Jagdish Hare',
-        'Subah Subah Le Shiv Ka Naam',
-        'Sri Venkatesam Manasa Smarami (Year 2000 Master)'
-      ],
-      cleansingFrequencies: [
-        '174 Hz Mom Pain Relief & Deep Rest',
-        '417 Hz Negative Energy Dissolver',
-        '528 Hz Home Harmony & Positive Vibe',
-        'Sacred Shankh Naad & Temple Bells'
+      orderedMorningPlaylist: [
+        '1. Sri Venkateswara Suprabhatam (M. S. Subbulakshmi) [1ST SONG]',
+        '2. Jai Ganesh Deva (Anuradha Paudwal) [NEXT SONG]',
+        '3. Sri Venkatesam Manasa Smarami (Year 2000 Master)',
+        '4. Shree Hanuman Chalisa (Hariharan)',
+        '5. Om Jai Jagdish Hare (Anuradha Paudwal)',
+        '6. Vishnu Sahasranamam (M. S. Subbulakshmi)',
+        '7. Annamacharya Classics (Brahmam Okate, Muddugare Yashoda, etc.)',
+        '8. Shiva Tandava Stotram (Most Powerful Shiva Mantra) [MANTRAS LAST]',
+        '9. Maha Mrityunjaya Mantra 108 Times (Suresh Wadkar & Anuradha Paudwal)',
+        '10. Gayatri Mantra 108 Times (Anuradha Paudwal)',
+        '11. Sacred Shankh Naad & Temple Bells'
       ],
       dailyRhythm: {
-        morning: '6:00 AM – 8:00 AM: Awakening & Protection (Suprabhatam / Vishnu Sahasranamam)',
-        afternoon: '8:00 AM – 6:00 PM: Calm Focus & Rest (528 Hz / 417 Hz + Hourly Bell)',
-        eveningSandhya: '6:00 PM – 7:30 PM: Clearing Negative Energy (Hanuman Chalisa + Shankh/Bell)',
-        nightBedtime: '7:30 PM – 11:00 PM: Healing & Sleep for Mom (174 Hz Continuous)'
-      },
-      physicalHomeTouches: {
-        rockSaltMop: 'Add a fistful of natural sea salt / rock salt to the water when mopping floors once a week to absorb static charges and dampness.',
-        eveningDeepam: 'Light a small ghee or sesame oil brass lamp during evening Sandhya while Hanuman Chalisa plays for tangible warmth and clarity.'
+        phase1_morning: '06:00 AM – 08:00 AM: Awakening & Protection (1st Suprabhatam, then Jai Ganesh Deva, Manasa Smarami, Mantras at end)',
+        phase2_afternoon: '08:00 AM – 06:00 PM: Calm Focus, 528 Hz Home Harmony & 417 Hz Space Cleansing + Hourly Bell on the hour (:00)',
+        phase3_eveningSandhya: '06:00 PM – 07:30 PM: Clearing Negative Energy (Hanuman Chalisa + Shankh & Temple Bell + Evening Brass Deepam)',
+        phase4_nightBedtime: '07:30 PM – 11:00 PM: Mom Pain Relief & Deep Sleep (174 Hz Continuous Soft Playback)',
+        lateNight_sleep: '11:00 PM – 06:00 AM: Quiet Sleep Mode (Auto-Off)'
       }
     });
   }
