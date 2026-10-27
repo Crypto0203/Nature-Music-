@@ -1,6 +1,6 @@
 import React, { useState, useRef } from 'react';
 import { motion } from 'framer-motion';
-import { Play, Pause, Volume2, Bell, Clock, Sun, Moon, Flame, Sunrise, Heart, Sparkles, Shield, Activity, Wind } from 'lucide-react';
+import { Play, Pause, Volume2, Bell, Clock, Sun, Moon, Flame, Sunrise, Heart, Sparkles, Shield, Activity, Wind, Sparkle, Droplets } from 'lucide-react';
 
 interface DevotionalSong {
   id: string;
@@ -46,10 +46,37 @@ const HIT_DEVOTIONAL_SONGS: DevotionalSong[] = [
     featured: true,
   },
   {
+    id: 'vishnu_sahasranamam',
+    title: 'Vishnu Sahasranamam',
+    artist: 'M. S. Subbulakshmi',
+    tag: 'Ancient Shield of Divine Positivity',
+    file: '/audio/devotional/vishnu-sahasranamam.mp3',
+    durationHint: 'Full Puja Stotram',
+    featured: true,
+  },
+  {
+    id: 'suprabhatam',
+    title: 'Sri Venkateswara Suprabhatam',
+    artist: 'M. S. Subbulakshmi',
+    tag: 'Divine Morning Energy / Tirupati Balaji',
+    file: '/audio/devotional/suprabhatam.mp3',
+    durationHint: '20 mins (Sunrise Puja)',
+    featured: true,
+  },
+  {
+    id: 'hanuman_chalisa',
+    title: 'Shree Hanuman Chalisa',
+    artist: 'Hariharan (T-Series)',
+    tag: 'Evening Sandhya Space Clearing & Strength',
+    file: '/audio/devotional/hanuman-chalisa-hariharan.mp3',
+    durationHint: 'Morning & Twilight',
+    featured: true,
+  },
+  {
     id: 'maha_mrityunjaya',
     title: 'Maha Mrityunjaya Mantra (108 Times)',
-    artist: 'Anuradha Paudwal & Suresh Wadkar',
-    tag: 'Ultimate Protective & Healing Chant',
+    artist: 'Suresh Wadkar & Anuradha Paudwal',
+    tag: 'Ultimate Healing & Fear Protection',
     file: '/audio/devotional/maha-mrityunjaya-mantra-108.mp3',
     durationHint: '108 Recitations',
     featured: true,
@@ -64,30 +91,12 @@ const HIT_DEVOTIONAL_SONGS: DevotionalSong[] = [
     featured: true,
   },
   {
-    id: 'hanuman_chalisa',
-    title: 'Shree Hanuman Chalisa',
-    artist: 'Hariharan (T-Series)',
-    tag: 'JioSaavn Top Devotional Hit #1',
-    file: '/audio/devotional/hanuman-chalisa-hariharan.mp3',
-    durationHint: 'Morning Power',
-    featured: true,
-  },
-  {
     id: 'govinda_koluvare',
     title: 'Govinda Govinda Yani Koluvare',
     artist: 'Annamacharya Sankeertana',
     tag: 'Year 2000 Super Hit Morning Bhajan',
     file: '/audio/devotional/govinda-govinda-yani-koluvare.mp3',
     durationHint: 'Temple Classic',
-    featured: true,
-  },
-  {
-    id: 'suprabhatam',
-    title: 'Sri Venkateswara Suprabhatam',
-    artist: 'M. S. Subbulakshmi',
-    tag: 'Tirupati Balaji Sunrise Puja',
-    file: '/audio/devotional/suprabhatam.mp3',
-    durationHint: '20 mins (Full Puja)',
   },
   {
     id: 'jai_ganesh',
@@ -188,7 +197,7 @@ const CLEANSING_SOUNDS: CleansingSound[] = [
   },
   {
     id: 'hz_417_cleanse',
-    title: '417 Hz Space & Mind Cleanser',
+    title: '417 Hz Negative Energy Dissolver',
     category: 'C. Solfeggio Vibration Therapy',
     whyPowerful: 'Specifically designated in sound therapy to break up negative emotional energy and dissolve deep mental/energetic blockages.',
     effect: 'Disperses heavy, stagnant home atmospheres and restores clear, uplifting vitality.',
@@ -202,22 +211,22 @@ const CLEANSING_SOUNDS: CleansingSound[] = [
 const HEALING_TRACKS: HealingTrack[] = [
   {
     id: 'pain_relief_174',
-    title: '174 Hz Deep Pain Relief & Muscle Relaxation',
+    title: '174 Hz Mom Pain Relief & Deep Rest',
     hz: '174 Hz Solfeggio',
     purpose: "Specially for Mom's Leg Pain & Body Tension",
-    description: 'Acts as a natural vibrational relaxant. Helps tight calf & leg muscles release tension, loosens spasms, and triggers calming endorphins.',
+    description: 'Acts as a natural vibrational relaxant. Helps tight calf & leg muscles release tension, loosens spasms, and triggers calming endorphins for deep sleep.',
     file: '/audio/healing/174hz-pain-relief.mp3',
-    tips: 'Elevate legs with 1-2 soft pillows under calves + apply gentle warmth. Play through room speakers at 35% volume.',
+    tips: 'Elevate legs with 1-2 soft pillows under calves + apply gentle warmth. Play continuously in evening or bedtime at 25-30% volume.',
     icon: <Heart className="w-5 h-5 text-rose-400" />,
   },
   {
     id: 'home_cleanse_528',
-    title: '528 Hz Transformation & Home Cleanse',
+    title: '528 Hz Home Harmony & Positive Vibe',
     hz: '528 Hz Solfeggio',
-    purpose: 'Remove Negative Vibrations & Brighten Home',
+    purpose: 'Remove Negative Vibrations & Transform Home',
     description: 'Produces a clean, uplifting resonance that clears heavy atmosphere and transforms the living hall into a peaceful, positive sanctuary.',
     file: '/audio/healing/528hz-home-cleanse.mp3',
-    tips: 'Ideal for daytime background listening between 10:00 AM and 6:00 PM.',
+    tips: 'Ideal for daytime background listening between 8:00 AM and 6:00 PM.',
     icon: <Sparkles className="w-5 h-5 text-amber-400" />,
   },
   {
@@ -245,43 +254,49 @@ const HEALING_TRACKS: HealingTrack[] = [
 interface ScheduleTrack {
   id: string;
   name: string;
+  phaseLabel: string;
   period: string;
   description: string;
   file: string;
   icon: React.ReactNode;
 }
 
+// 4-Phase Daily Rhythm (Aligned with user specifications)
 const SCHEDULE_TRACKS: ScheduleTrack[] = [
   {
-    id: 'morning_devotional',
-    name: 'Morning Sri Venkatesam & Suprabhatam',
-    period: '06:00 AM – 10:00 AM',
-    description: 'Sri Venkatesam Manasa Smarami, Hanuman Chalisa, Suprabhatam & Annamayya Sankeertanalu for auspicious wake-up',
-    file: '/audio/devotional/sri-venkatesam-manasa-smarami.mp3',
+    id: 'morning_awakening',
+    phaseLabel: 'Phase 1',
+    name: 'Morning Awakening & Protection',
+    period: '06:00 AM – 08:00 AM',
+    description: 'M. S. Subbulakshmi Suprabhatam, Vishnu Sahasranamam, Sri Venkatesam Manasa Smarami & Gayatri Mantra for a golden, protective morning.',
+    file: '/audio/devotional/suprabhatam.mp3',
     icon: <Sunrise className="w-5 h-5 text-[#FFB74D]" />,
   },
   {
-    id: 'daytime_healing',
-    name: 'Daytime 174 Hz Healing & 528 Hz Home Energy',
-    period: '10:00 AM – 06:00 PM',
-    description: "174 Hz muscle pain relief for Mom's legs, 528 Hz home cleanse & hourly bronze temple bell chime every hour on the hour",
-    file: '/audio/healing/174hz-pain-relief.mp3',
+    id: 'afternoon_calm',
+    phaseLabel: 'Phase 2',
+    name: 'Afternoon Calm Focus & Rest',
+    period: '08:00 AM – 06:00 PM',
+    description: 'Soft Bansuri flute, 528 Hz Home Harmony & 417 Hz space clearing with hourly bronze temple bell chimes at :00 to reset positive energy.',
+    file: '/audio/healing/528hz-home-cleanse.mp3',
     icon: <Sun className="w-5 h-5 text-[#4FC3F7]" />,
   },
   {
     id: 'evening_sandhya',
-    name: 'Evening Sandhya Pooja Devotion',
+    phaseLabel: 'Phase 3',
+    name: 'Evening Sandhya: Clearing Negative Energy',
     period: '06:00 PM – 07:30 PM',
-    description: 'Deeparadhana aarti resonance, C# Vedic tanpura drone & twilight temple chimes',
-    file: '/audio/evening-sandhya.mp3',
+    description: 'Shree Hanuman Chalisa or Maha Mrityunjaya Mantra + Shankh & Temple Bell to clear twilight negativity and bring divine peace into the home.',
+    file: '/audio/devotional/hanuman-chalisa-hariharan.mp3',
     icon: <Flame className="w-5 h-5 text-[#FF7043]" />,
   },
   {
-    id: 'night_flute',
-    name: 'Night Peace & Krishna Flute',
-    period: '07:30 PM – 11:00 PM',
-    description: 'Krishna Bansuri flute in Raga Yaman, 528 Hz healing love frequency & Delta sleep waves',
-    file: '/audio/night-sleep-flute.mp3',
+    id: 'night_healing_sleep',
+    phaseLabel: 'Phase 4',
+    name: 'Night / Bedtime: Healing & Sleep for Mom',
+    period: '07:30 PM – 11:00 PM (9:00 PM+)',
+    description: '174 Hz continuous soft playback to ease leg muscle tension, loosen spasms, and bring deep restorative sleep for Mom.',
+    file: '/audio/healing/174hz-pain-relief.mp3',
     icon: <Moon className="w-5 h-5 text-[#BA68C8]" />,
   },
 ];
@@ -355,7 +370,7 @@ export default function SanctuaryPlayer() {
             </span>
           </div>
           <p className="text-xs text-[#90CAF9]/80">
-            Featuring <strong>Sri Venkatesam Manasa Smarami</strong>, Hanuman Chalisa, 3 Powerful Cleansing Sounds (Maha Mrityunjaya, Shankh Naad, 417 Hz) & Mom's 174 Hz Leg Relief.
+            Featuring <strong>Sri Venkatesam Manasa Smarami</strong>, Suprabhatam & Vishnu Sahasranamam (M.S. Subbulakshmi), Hanuman Chalisa & 174 Hz Leg Pain Relief.
           </p>
         </div>
 
@@ -402,7 +417,7 @@ export default function SanctuaryPlayer() {
                   : 'text-white/70 hover:text-white'
               }`}
             >
-              24-Hour Schedule
+              4-Phase Daily Rhythm
             </button>
           </div>
 
@@ -648,7 +663,7 @@ export default function SanctuaryPlayer() {
             <div className="flex flex-wrap gap-2 text-[11px] text-white/90">
               <span className="bg-rose-500/15 px-2.5 py-1 rounded-lg border border-rose-400/20">🛏️ Elevate legs on 1-2 soft pillows</span>
               <span className="bg-amber-500/15 px-2.5 py-1 rounded-lg border border-amber-400/20">🔥 Warm cloth / water bottle</span>
-              <span className="bg-cyan-500/15 px-2.5 py-1 rounded-lg border border-cyan-400/20">🔊 Gentle Hall volume (30-35%)</span>
+              <span className="bg-cyan-500/15 px-2.5 py-1 rounded-lg border border-cyan-400/20">🔊 Gentle Hall volume (25-30%)</span>
             </div>
           </div>
 
@@ -706,48 +721,88 @@ export default function SanctuaryPlayer() {
         </div>
       )}
 
-      {/* TAB 4: 24-Hour Home Sanctuary Schedule */}
+      {/* TAB 4: 4-Phase Daily Rhythm + Physical Home Touches */}
       {activeTab === 'schedule' && (
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
-          {SCHEDULE_TRACKS.map((t) => {
-            const isThisPlaying = currentPlayingTitle === t.name && isPlaying;
-            return (
-              <motion.div
-                key={t.id}
-                whileHover={{ scale: 1.02 }}
-                className={`p-4 rounded-xl border flex flex-col justify-between transition-all ${
-                  isThisPlaying
-                    ? 'bg-white/15 border-white/50 shadow-lg'
-                    : 'bg-white/5 border-white/10 hover:border-white/25'
-                }`}
-              >
-                <div>
-                  <div className="flex items-center justify-between mb-2">
-                    <div className="p-2 rounded-lg bg-black/40 border border-white/10">
-                      {t.icon}
-                    </div>
-                  </div>
-                  <h4 className="font-bold text-sm text-white mb-0.5">{t.name}</h4>
-                  <div className="flex items-center gap-1 text-[11px] text-[#FFB74D] font-medium mb-2">
-                    <Clock size={12} />
-                    <span>{t.period}</span>
-                  </div>
-                  <p className="text-[11px] text-white/60 mb-3">{t.description}</p>
-                </div>
-
-                <button
-                  onClick={() => playSong(t.file, t.name)}
-                  className={`w-full py-2 px-3 rounded-lg flex items-center justify-center gap-2 text-xs font-bold transition-all shadow ${
+        <div className="space-y-6 mb-6">
+          {/* 4-Phase Schedule Cards */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            {SCHEDULE_TRACKS.map((t) => {
+              const isThisPlaying = currentPlayingTitle === t.name && isPlaying;
+              return (
+                <motion.div
+                  key={t.id}
+                  whileHover={{ scale: 1.02 }}
+                  className={`p-4 rounded-xl border flex flex-col justify-between transition-all ${
                     isThisPlaying
-                      ? 'bg-gradient-to-r from-red-500 to-pink-500 text-white'
-                      : 'bg-white/10 hover:bg-white/20 text-white'
+                      ? 'bg-white/15 border-white/50 shadow-lg'
+                      : 'bg-white/5 border-white/10 hover:border-white/25'
                   }`}
                 >
-                  {isThisPlaying ? 'Pause' : 'Play Phase'}
-                </button>
-              </motion.div>
-            );
-          })}
+                  <div>
+                    <div className="flex items-center justify-between mb-2">
+                      <div className="p-2 rounded-lg bg-black/40 border border-white/10">
+                        {t.icon}
+                      </div>
+                      <span className="text-[10px] font-bold text-[#FFB74D] bg-[#FFB74D]/15 px-2 py-0.5 rounded border border-[#FFB74D]/25">
+                        {t.phaseLabel}
+                      </span>
+                    </div>
+                    <h4 className="font-bold text-sm text-white mb-0.5">{t.name}</h4>
+                    <div className="flex items-center gap-1 text-[11px] text-[#FFB74D] font-medium mb-2">
+                      <Clock size={12} />
+                      <span>{t.period}</span>
+                    </div>
+                    <p className="text-[11px] text-white/70 mb-3 leading-relaxed">{t.description}</p>
+                  </div>
+
+                  <button
+                    onClick={() => playSong(t.file, t.name)}
+                    className={`w-full py-2 px-3 rounded-lg flex items-center justify-center gap-2 text-xs font-bold transition-all shadow ${
+                      isThisPlaying
+                        ? 'bg-gradient-to-r from-red-500 to-pink-500 text-white'
+                        : 'bg-white/10 hover:bg-white/20 text-white'
+                    }`}
+                  >
+                    {isThisPlaying ? 'Pause' : 'Play Phase'}
+                  </button>
+                </motion.div>
+              );
+            })}
+          </div>
+
+          {/* Two Physical Home Touches Card */}
+          <div className="p-5 rounded-2xl bg-gradient-to-r from-indigo-950/40 via-purple-950/40 to-black/70 border border-indigo-400/30">
+            <div className="flex items-center gap-2 text-indigo-300 font-bold text-sm mb-3">
+              <Sparkle className="w-4 h-4 text-indigo-400" />
+              <span>Two Simple Physical Home Touches to Pair with the Soundscape</span>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
+              <div className="p-4 rounded-xl bg-black/40 border border-white/10 flex gap-3">
+                <div className="p-2 rounded-lg bg-indigo-500/20 text-indigo-300 h-fit">
+                  <Droplets size={18} />
+                </div>
+                <div>
+                  <h5 className="font-bold text-white mb-1">1. Rock Salt Water Mop (Once a Week)</h5>
+                  <p className="text-white/75 text-[11px] leading-relaxed">
+                    Add a fistful of natural sea salt or rock salt to the water when mopping floors. Salt physically absorbs negative static charges and dampness, leaving the air noticeably lighter.
+                  </p>
+                </div>
+              </div>
+
+              <div className="p-4 rounded-xl bg-black/40 border border-white/10 flex gap-3">
+                <div className="p-2 rounded-lg bg-amber-500/20 text-amber-300 h-fit">
+                  <Flame size={18} />
+                </div>
+                <div>
+                  <h5 className="font-bold text-white mb-1">2. Evening Deepam (Brass Lamp)</h5>
+                  <p className="text-white/75 text-[11px] leading-relaxed">
+                    Light a small ghee or sesame oil brass lamp during evening Sandhya (6:00 PM – 7:30 PM) while the Hanuman Chalisa or bell chime plays. It creates warmth, clarity, and peace you can feel immediately upon stepping into the house.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       )}
 
@@ -770,10 +825,9 @@ export default function SanctuaryPlayer() {
 
         <div className="flex flex-wrap items-center gap-2 text-white/80 text-[11px]">
           <span className="font-semibold text-[#FFD700]">Alexa Echo Voice Commands:</span>
-          <span className="bg-white/5 px-2 py-0.5 rounded border border-white/10">"Alexa, ask Calm Nature to start morning ritual"</span>
-          <span className="bg-white/5 px-2 py-0.5 rounded border border-white/10">"Alexa, ask Calm Nature to blow Shankh"</span>
+          <span className="bg-white/5 px-2 py-0.5 rounded border border-white/10">"Alexa, ask Calm Nature to play Vishnu Sahasranamam"</span>
+          <span className="bg-white/5 px-2 py-0.5 rounded border border-white/10">"Alexa, ask Calm Nature to play Suprabhatam"</span>
           <span className="bg-white/5 px-2 py-0.5 rounded border border-white/10">"Alexa, ask Calm Nature to play Maha Mrityunjaya"</span>
-          <span className="bg-white/5 px-2 py-0.5 rounded border border-white/10">"Alexa, ask Calm Nature to play 417 Hz"</span>
           <span className="bg-white/5 px-2 py-0.5 rounded border border-white/10">"Alexa, ask Calm Nature to play pain relief"</span>
         </div>
       </div>
