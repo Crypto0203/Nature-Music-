@@ -1,6 +1,8 @@
 // =====================================================================
-// 🎙️ CalmNature — 90s All-Time Hit Devotional Songs & Alexa Handler
+// 🎙️ CalmNature — Year 2000 Golden Devotional Songs & Alexa Handler
 // Songs Inbuilt:
+//  - Sri Venkatesam Manasa Smarami (Full Master Song)
+//  - Govinda Govinda Yani Koluvare
 //  - Sri Venkateswara Suprabhatam (M.S. Subbulakshmi)
 //  - Brahmam Okate (Thandanana) (Annamayya Sankeertana)
 //  - Muddugare Yashoda (Annamayya Sankeertana)
@@ -18,12 +20,30 @@ function getRequestedSong(request) {
   const intentName = (request.intent?.name || '').toLowerCase();
   const text = (query + ' ' + intentName).toLowerCase();
 
-  if (text.includes('suprabhatam') || text.includes('subbulakshmi') || text.includes('morning song') || text.includes('balaji') || text.includes('venkateswara')) {
+  if (text.includes('smarami') || text.includes('manasa') || text.includes('venkatesam') || text.includes('srinivasam')) {
+    return {
+      phase: 'manasa_smarami',
+      title: 'Sri Venkatesam Manasa Smarami',
+      file: 'devotional/sri-venkatesam-manasa-smarami.mp3',
+      speech: 'Starting Sri Venkatesam Manasa Smarami, Sri Srinivasam Sritha Parijatham. Have a blessed and auspicious day.',
+      volume: 40
+    };
+  }
+  if (text.includes('koluvare') || text.includes('govinda govinda')) {
+    return {
+      phase: 'govinda_koluvare',
+      title: 'Govinda Govinda Yani Koluvare',
+      file: 'devotional/govinda-govinda-yani-koluvare.mp3',
+      speech: 'Playing Govinda Govinda Yani Koluvare, Annamacharya Sankeertana.',
+      volume: 40
+    };
+  }
+  if (text.includes('suprabhatam') || text.includes('subbulakshmi') || text.includes('morning song') || text.includes('balaji')) {
     return {
       phase: 'suprabhatam',
       title: 'Sri Venkateswara Suprabhatam',
       file: 'devotional/suprabhatam.mp3',
-      speech: 'Good morning! Starting M.S. Subbulakshmi’s legendary Sri Venkateswara Suprabhatam. Have a blessed and auspicious day.',
+      speech: 'Good morning! Starting M.S. Subbulakshmi’s legendary Sri Venkateswara Suprabhatam.',
       volume: 40
     };
   }
@@ -32,7 +52,7 @@ function getRequestedSong(request) {
       phase: 'brahmam_okate',
       title: 'Brahmam Okate (Thandanana)',
       file: 'devotional/brahmam-okate.mp3',
-      speech: 'Playing the classic Annamacharya Sankeertana Brahmam Okate Parabrahmam Okate.',
+      speech: 'Playing Brahmam Okate Parabrahmam Okate.',
       volume: 40
     };
   }
@@ -41,7 +61,7 @@ function getRequestedSong(request) {
       phase: 'muddugare_yashoda',
       title: 'Muddugare Yashoda',
       file: 'devotional/muddugare-yashoda.mp3',
-      speech: 'Playing the divine Annamacharya Sankeertana Muddugare Yashoda.',
+      speech: 'Playing Muddugare Yashoda.',
       volume: 40
     };
   }
@@ -72,12 +92,12 @@ function getRequestedSong(request) {
       volume: 40
     };
   }
-  if (text.includes('90') || text.includes('devotion') || text.includes('god') || text.includes('bhajan')) {
+  if (text.includes('2000') || text.includes('90') || text.includes('devotion') || text.includes('god') || text.includes('bhajan')) {
     return {
-      phase: 'suprabhatam',
-      title: 'Sri Venkateswara Suprabhatam',
-      file: 'devotional/suprabhatam.mp3',
-      speech: 'Playing your all-time hit 90s devotional morning prayer: M.S. Subbulakshmi’s Sri Venkateswara Suprabhatam.',
+      phase: 'manasa_smarami',
+      title: 'Sri Venkatesam Manasa Smarami',
+      file: 'devotional/sri-venkatesam-manasa-smarami.mp3',
+      speech: 'Playing your golden devotional morning song: Sri Venkatesam Manasa Smarami.',
       volume: 40
     };
   }
@@ -120,13 +140,13 @@ function getCurrentPhase(offsetHours = 5.5) {
   const minute = targetTime.getMinutes();
   const timeVal = hour + minute / 60.0;
 
-  // 6:00 AM to 10:00 AM -> M.S. Subbulakshmi Sri Venkateswara Suprabhatam
+  // 6:00 AM to 10:00 AM -> Sri Venkatesam Manasa Smarami
   if (timeVal >= 6.0 && timeVal < 10.0) {
     return {
       phase: 'morning_devotional',
-      title: 'Sri Venkateswara Suprabhatam (M.S. Subbulakshmi)',
-      file: 'devotional/suprabhatam.mp3',
-      speech: 'Good morning! Starting your 90s morning devotional prayer: M.S. Subbulakshmi’s Sri Venkateswara Suprabhatam. Have a blessed day.',
+      title: 'Sri Venkatesam Manasa Smarami',
+      file: 'devotional/sri-venkatesam-manasa-smarami.mp3',
+      speech: 'Good morning! Starting Sri Venkatesam Manasa Smarami. Have a blessed and prosperous day.',
       volume: 40
     };
   } else if (timeVal >= 10.0 && timeVal < 18.0) {
@@ -181,22 +201,14 @@ export default function handler(req, res) {
   const audioUrl = current.file ? `${proto}://${host}/audio/${current.file}` : null;
   const bellUrl = `${proto}://${host}/audio/temple-bell-hourly.mp3`;
 
-  // Status check endpoint
   if (req.method === 'GET') {
     return res.status(200).json({
       status: 'online',
-      system: 'CalmNature 90s Hit Devotional & Sanctuary Engine',
+      system: 'CalmNature 2000s Golden Devotional & Sanctuary Engine',
       currentPhase: current,
       streamUrl: audioUrl,
       hourlyChimeUrl: bellUrl,
-      devotionalSongs: [
-        { id: 'suprabhatam', name: 'Sri Venkateswara Suprabhatam (M.S. Subbulakshmi)', url: `${proto}://${host}/audio/devotional/suprabhatam.mp3` },
-        { id: 'brahmam_okate', name: 'Brahmam Okate (Annamayya)', url: `${proto}://${host}/audio/devotional/brahmam-okate.mp3` },
-        { id: 'muddugare_yashoda', name: 'Muddugare Yashoda (Annamayya)', url: `${proto}://${host}/audio/devotional/muddugare-yashoda.mp3` },
-        { id: 'kondalalo_nelakonna', name: 'Kondalalo Nelakonna (Annamayya)', url: `${proto}://${host}/audio/devotional/kondalalo-nelakonna.mp3` },
-        { id: 'adivo_alladivo', name: 'Adivo Alladivo (Annamayya)', url: `${proto}://${host}/audio/devotional/adivo-alladivo.mp3` },
-        { id: 'sreemannarayana', name: 'Sriman Narayana (Annamayya)', url: `${proto}://${host}/audio/devotional/sreemannarayana.mp3` }
-      ]
+      flagshipSong: 'Sri Venkatesam Manasa Smarami'
     });
   }
 
