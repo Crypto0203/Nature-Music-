@@ -1,14 +1,12 @@
 // =====================================================================
-// 🎙️ CalmNature — Year 2000 Golden Devotional Songs & Alexa Handler
-// Songs Inbuilt:
-//  - Sri Venkatesam Manasa Smarami (Full Master Song)
-//  - Govinda Govinda Yani Koluvare
-//  - Sri Venkateswara Suprabhatam (M.S. Subbulakshmi)
-//  - Brahmam Okate (Thandanana) (Annamayya Sankeertana)
-//  - Muddugare Yashoda (Annamayya Sankeertana)
-//  - Kondalalo Nelakonna Koneti Rayadu (Annamayya Sankeertana)
-//  - Adivo Alladivo (Annamayya Sankeertana)
-//  - Sriman Narayana (Annamayya Sankeertana)
+// 🎙️ CalmNature — Year 2000 Golden Devotional Songs & Sanctuary API
+// Built for Single Hall Living Room + Alexa Echo
+// Morning List: Sri Venkatesam Manasa Smarami, Hanuman Chalisa,
+//               Jai Ganesh Deva, Gayatri Mantra 108, Om Jai Jagdish Hare,
+//               Subah Subah Le Shiv Ka Naam, Govinda Govinda, Suprabhatam
+// Daytime & Healing: 174 Hz Pain Relief (Mom's Leg Relief),
+//                    528 Hz Home Cleanse, 432 Hz OM Chanting,
+//                    Tibetan Singing Bowls + Hourly Temple Bell
 // =====================================================================
 
 function getRequestedSong(request) {
@@ -20,6 +18,102 @@ function getRequestedSong(request) {
   const intentName = (request.intent?.name || '').toLowerCase();
   const text = (query + ' ' + intentName).toLowerCase();
 
+  // --- MOM'S LEG PAIN RELIEF & 174 HZ ---
+  if (text.includes('174') || text.includes('pain') || text.includes('leg') || text.includes('mom') || text.includes('mother') || text.includes('healing') || text.includes('muscle') || text.includes('relief')) {
+    return {
+      phase: 'pain_relief_174',
+      title: '174 Hz Deep Pain Relief & Muscle Relaxation',
+      file: 'healing/174hz-pain-relief.mp3',
+      speech: "Starting 174 Hz Solfeggio frequency for your mother's comfort and deep leg muscle pain relief. Please keep the volume gentle and place one or two soft pillows under her calves for best relief.",
+      volume: 35
+    };
+  }
+
+  // --- 528 HZ HOME CLEANSE & POSITIVE ENERGY ---
+  if (text.includes('528') || text.includes('cleanse') || text.includes('negative') || text.includes('vibe') || text.includes('clean')) {
+    return {
+      phase: 'home_cleanse_528',
+      title: '528 Hz Negative Energy Cleansing & Home Transformation',
+      file: 'healing/528hz-home-cleanse.mp3',
+      speech: 'Playing 528 Hz transformation frequency to cleanse and uplift your home with pure positive energy.',
+      volume: 35
+    };
+  }
+
+  // --- 432 HZ OM CHANTING ---
+  if (text.includes('432') || text.includes('om chant') || text.includes('chanting') || text.includes('om mantra')) {
+    return {
+      phase: 'om_chanting_432',
+      title: '432 Hz Sacred OM Chanting for Deep Peace',
+      file: 'healing/432hz-om-chanting.mp3',
+      speech: 'Starting 432 Hz deep peace OM chanting for mental tranquility and harmony.',
+      volume: 35
+    };
+  }
+
+  // --- TIBETAN SINGING BOWLS ---
+  if (text.includes('bowl') || text.includes('tibetan') || text.includes('sound bath')) {
+    return {
+      phase: 'tibetan_bowls',
+      title: 'Tibetan Singing Bowls Sound Bath',
+      file: 'healing/tibetan-singing-bowls.mp3',
+      speech: 'Playing Tibetan Singing Bowls sound bath for cellular relaxation and peace.',
+      volume: 35
+    };
+  }
+
+  // --- JIOSAAVN TOP DEVOTIONAL MORNING SONGS ---
+  if (text.includes('hanuman') || text.includes('chalisa') || text.includes('hariharan') || text.includes('bajrangbali')) {
+    return {
+      phase: 'hanuman_chalisa',
+      title: 'Shree Hanuman Chalisa (Hariharan)',
+      file: 'devotional/hanuman-chalisa-hariharan.mp3',
+      speech: 'Starting Shree Hanuman Chalisa sung by Hariharan. Jai Bajrangbali.',
+      volume: 40
+    };
+  }
+
+  if (text.includes('ganesh') || text.includes('ganpati') || text.includes('jai ganesh')) {
+    return {
+      phase: 'jai_ganesh_deva',
+      title: 'Jai Ganesh Deva (Anuradha Paudwal)',
+      file: 'devotional/jai-ganesh-deva.mp3',
+      speech: 'Playing Jai Ganesh Deva Aarti by Anuradha Paudwal. Ganpati Bappa Morya.',
+      volume: 40
+    };
+  }
+
+  if (text.includes('gayatri') || text.includes('108') || text.includes('gayatri mantra')) {
+    return {
+      phase: 'gayatri_mantra_108',
+      title: 'Gayatri Mantra 108 Times (Anuradha Paudwal)',
+      file: 'devotional/gayatri-mantra-108.mp3',
+      speech: 'Starting Gayatri Mantra 108 Times for supreme mental clarity and peace.',
+      volume: 40
+    };
+  }
+
+  if (text.includes('jagdish') || text.includes('om jai jagdish') || text.includes('vishnu aarti')) {
+    return {
+      phase: 'om_jai_jagdish_hare',
+      title: 'Om Jai Jagdish Hare (Anuradha Paudwal)',
+      file: 'devotional/om-jai-jagdish-hare.mp3',
+      speech: 'Playing Om Jai Jagdish Hare Aarti by Anuradha Paudwal.',
+      volume: 40
+    };
+  }
+
+  if (text.includes('subah') || text.includes('shiv') || text.includes('bholenath') || text.includes('shiva')) {
+    return {
+      phase: 'subah_subah_le_shiv',
+      title: 'Subah Subah Le Shiv Ka Naam (Hariharan)',
+      file: 'devotional/subah-subah-le-shiv-ka-naam.mp3',
+      speech: 'Playing Subah Subah Le Shiv Ka Naam by Hariharan. Har Har Mahadev.',
+      volume: 40
+    };
+  }
+
+  // --- YEAR 2000 GOLDEN TELUGU DEVOTIONAL HITS ---
   if (text.includes('smarami') || text.includes('manasa') || text.includes('venkatesam') || text.includes('srinivasam')) {
     return {
       phase: 'manasa_smarami',
@@ -29,6 +123,7 @@ function getRequestedSong(request) {
       volume: 40
     };
   }
+
   if (text.includes('koluvare') || text.includes('govinda govinda')) {
     return {
       phase: 'govinda_koluvare',
@@ -38,7 +133,8 @@ function getRequestedSong(request) {
       volume: 40
     };
   }
-  if (text.includes('suprabhatam') || text.includes('subbulakshmi') || text.includes('morning song') || text.includes('balaji')) {
+
+  if (text.includes('suprabhatam') || text.includes('subbulakshmi') || text.includes('balaji')) {
     return {
       phase: 'suprabhatam',
       title: 'Sri Venkateswara Suprabhatam',
@@ -47,6 +143,7 @@ function getRequestedSong(request) {
       volume: 40
     };
   }
+
   if (text.includes('brahmam') || text.includes('thandanana')) {
     return {
       phase: 'brahmam_okate',
@@ -56,6 +153,7 @@ function getRequestedSong(request) {
       volume: 40
     };
   }
+
   if (text.includes('muddugare') || text.includes('yashoda') || text.includes('krishna song')) {
     return {
       phase: 'muddugare_yashoda',
@@ -65,6 +163,7 @@ function getRequestedSong(request) {
       volume: 40
     };
   }
+
   if (text.includes('kondalalo') || text.includes('koneti')) {
     return {
       phase: 'kondalalo_nelakonna',
@@ -74,6 +173,7 @@ function getRequestedSong(request) {
       volume: 40
     };
   }
+
   if (text.includes('adivo') || text.includes('alladivo')) {
     return {
       phase: 'adivo_alladivo',
@@ -83,6 +183,7 @@ function getRequestedSong(request) {
       volume: 40
     };
   }
+
   if (text.includes('narayana') || text.includes('sreemannarayana')) {
     return {
       phase: 'sreemannarayana',
@@ -92,15 +193,18 @@ function getRequestedSong(request) {
       volume: 40
     };
   }
-  if (text.includes('2000') || text.includes('90') || text.includes('devotion') || text.includes('god') || text.includes('bhajan')) {
+
+  // --- GENERAL COMMANDS ---
+  if (text.includes('2000') || text.includes('90') || text.includes('devotion') || text.includes('god song') || text.includes('bhajan') || text.includes('morning song') || text.includes('morning list')) {
     return {
       phase: 'manasa_smarami',
       title: 'Sri Venkatesam Manasa Smarami',
       file: 'devotional/sri-venkatesam-manasa-smarami.mp3',
-      speech: 'Playing your golden devotional morning song: Sri Venkatesam Manasa Smarami.',
+      speech: 'Playing your golden morning devotional song: Sri Venkatesam Manasa Smarami.',
       volume: 40
     };
   }
+
   if (text.includes('bell') || text.includes('chime') || text.includes('temple')) {
     return {
       phase: 'temple_bell',
@@ -110,6 +214,7 @@ function getRequestedSong(request) {
       volume: 40
     };
   }
+
   if (text.includes('evening') || text.includes('sandhya') || text.includes('pooja') || text.includes('aarti')) {
     return {
       phase: 'evening_sandhya',
@@ -119,6 +224,7 @@ function getRequestedSong(request) {
       volume: 35
     };
   }
+
   if (text.includes('flute') || text.includes('sleep') || text.includes('night')) {
     return {
       phase: 'night_flute',
@@ -128,6 +234,7 @@ function getRequestedSong(request) {
       volume: 20
     };
   }
+
   return null;
 }
 
@@ -140,23 +247,25 @@ function getCurrentPhase(offsetHours = 5.5) {
   const minute = targetTime.getMinutes();
   const timeVal = hour + minute / 60.0;
 
-  // 6:00 AM to 10:00 AM -> Sri Venkatesam Manasa Smarami
+  // 6:00 AM to 10:00 AM -> Morning Devotional Songs (Sri Venkatesam Manasa Smarami)
   if (timeVal >= 6.0 && timeVal < 10.0) {
     return {
       phase: 'morning_devotional',
       title: 'Sri Venkatesam Manasa Smarami',
       file: 'devotional/sri-venkatesam-manasa-smarami.mp3',
-      speech: 'Good morning! Starting Sri Venkatesam Manasa Smarami. Have a blessed and prosperous day.',
+      speech: 'Good morning! Starting Sri Venkatesam Manasa Smarami and your morning devotional songs. Have a blessed and prosperous day.',
       volume: 40
     };
+  // 10:00 AM to 6:00 PM -> Daytime Healing & Pain Relief (174 Hz / 528 Hz) + Hourly Bell
   } else if (timeVal >= 10.0 && timeVal < 18.0) {
     return {
-      phase: 'daytime_positive',
-      title: 'Positive Home Energy & Hourly Bell',
-      file: 'morning-positive.mp3',
-      speech: 'Starting your positive daytime vibration soundscape. Hourly temple chimes will ring to bring peace to your home.',
-      volume: 25
+      phase: 'daytime_healing',
+      title: 'Daytime 174 Hz Healing & 528 Hz Home Positive Energy',
+      file: 'healing/174hz-pain-relief.mp3',
+      speech: "Good day! Starting 174 Hz deep muscle pain relief and 528 Hz positive home cleanse. Hourly temple bells will ring every hour.",
+      volume: 35
     };
+  // 6:00 PM to 7:30 PM -> Evening Sandhya Pooja
   } else if (timeVal >= 18.0 && timeVal < 19.5) {
     return {
       phase: 'evening_sandhya',
@@ -165,6 +274,7 @@ function getCurrentPhase(offsetHours = 5.5) {
       speech: 'Good evening! Starting your Sandhya Deepam pooja devotional melodies.',
       volume: 35
     };
+  // 7:30 PM to 11:00 PM -> Night Peace Krishna Flute & 528 Hz
   } else if (timeVal >= 19.5 && timeVal < 23.0) {
     return {
       phase: 'night_flute',
@@ -173,6 +283,7 @@ function getCurrentPhase(offsetHours = 5.5) {
       speech: 'Starting your calming night bansuri flute and 528 Hz healing frequencies for peaceful sleep.',
       volume: 20
     };
+  // 11:00 PM to 6:00 AM -> Quiet Rest / Sleep Mode
   } else {
     return {
       phase: 'sleep_mode',
@@ -204,11 +315,19 @@ export default function handler(req, res) {
   if (req.method === 'GET') {
     return res.status(200).json({
       status: 'online',
-      system: 'CalmNature 2000s Golden Devotional & Sanctuary Engine',
+      system: 'CalmNature Sanctuary & Alexa Audio Engine',
       currentPhase: current,
       streamUrl: audioUrl,
       hourlyChimeUrl: bellUrl,
-      flagshipSong: 'Sri Venkatesam Manasa Smarami'
+      flagshipSong: 'Sri Venkatesam Manasa Smarami',
+      momPainReliefTrack: '174 Hz Deep Pain Relief & Muscle Relaxation',
+      jiosaavnTracks: [
+        'Shree Hanuman Chalisa (Hariharan)',
+        'Jai Ganesh Deva (Anuradha Paudwal)',
+        'Gayatri Mantra 108 Times',
+        'Om Jai Jagdish Hare',
+        'Subah Subah Le Shiv Ka Naam'
+      ]
     });
   }
 
