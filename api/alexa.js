@@ -1,10 +1,15 @@
 // =====================================================================
-// 🎙️ CalmNature — 24-Hour Home Energy & Alexa Skill Handler
-// Automatically streams the exact phase based on the time of day,
-// OR plays specific requested tracks (90s god songs, temple bell, evening pooja, night flute)
+// 🎙️ CalmNature — 90s All-Time Hit Devotional Songs & Alexa Handler
+// Songs Inbuilt:
+//  - Sri Venkateswara Suprabhatam (M.S. Subbulakshmi)
+//  - Brahmam Okate (Thandanana) (Annamayya Sankeertana)
+//  - Muddugare Yashoda (Annamayya Sankeertana)
+//  - Kondalalo Nelakonna Koneti Rayadu (Annamayya Sankeertana)
+//  - Adivo Alladivo (Annamayya Sankeertana)
+//  - Sriman Narayana (Annamayya Sankeertana)
 // =====================================================================
 
-function getRequestedTrack(request) {
+function getRequestedSong(request) {
   const slots = request.intent?.slots || {};
   let query = '';
   for (const k in slots) {
@@ -13,12 +18,66 @@ function getRequestedTrack(request) {
   const intentName = (request.intent?.name || '').toLowerCase();
   const text = (query + ' ' + intentName).toLowerCase();
 
-  if (text.includes('morning') || text.includes('90') || text.includes('devotion') || text.includes('god') || text.includes('bhajan')) {
+  if (text.includes('suprabhatam') || text.includes('subbulakshmi') || text.includes('morning song') || text.includes('balaji') || text.includes('venkateswara')) {
     return {
-      phase: 'morning_devotional',
-      title: '90s Morning Devotional Bliss',
-      file: 'morning-devotional.mp3',
-      speech: 'Playing your 90s morning devotional soundscape with Suprabhatam and Annamayya temple vibrations. Have a blessed day.',
+      phase: 'suprabhatam',
+      title: 'Sri Venkateswara Suprabhatam',
+      file: 'devotional/suprabhatam.mp3',
+      speech: 'Good morning! Starting M.S. Subbulakshmi’s legendary Sri Venkateswara Suprabhatam. Have a blessed and auspicious day.',
+      volume: 40
+    };
+  }
+  if (text.includes('brahmam') || text.includes('thandanana')) {
+    return {
+      phase: 'brahmam_okate',
+      title: 'Brahmam Okate (Thandanana)',
+      file: 'devotional/brahmam-okate.mp3',
+      speech: 'Playing the classic Annamacharya Sankeertana Brahmam Okate Parabrahmam Okate.',
+      volume: 40
+    };
+  }
+  if (text.includes('muddugare') || text.includes('yashoda') || text.includes('krishna song')) {
+    return {
+      phase: 'muddugare_yashoda',
+      title: 'Muddugare Yashoda',
+      file: 'devotional/muddugare-yashoda.mp3',
+      speech: 'Playing the divine Annamacharya Sankeertana Muddugare Yashoda.',
+      volume: 40
+    };
+  }
+  if (text.includes('kondalalo') || text.includes('koneti')) {
+    return {
+      phase: 'kondalalo_nelakonna',
+      title: 'Kondalalo Nelakonna',
+      file: 'devotional/kondalalo-nelakonna.mp3',
+      speech: 'Playing Kondalalo Nelakonna Koneti Rayadu.',
+      volume: 40
+    };
+  }
+  if (text.includes('adivo') || text.includes('alladivo')) {
+    return {
+      phase: 'adivo_alladivo',
+      title: 'Adivo Alladivo',
+      file: 'devotional/adivo-alladivo.mp3',
+      speech: 'Playing Adivo Alladivo Sri Hari Vasamu.',
+      volume: 40
+    };
+  }
+  if (text.includes('narayana') || text.includes('sreemannarayana')) {
+    return {
+      phase: 'sreemannarayana',
+      title: 'Sriman Narayana',
+      file: 'devotional/sreemannarayana.mp3',
+      speech: 'Playing Sriman Narayana Sriman Narayana.',
+      volume: 40
+    };
+  }
+  if (text.includes('90') || text.includes('devotion') || text.includes('god') || text.includes('bhajan')) {
+    return {
+      phase: 'suprabhatam',
+      title: 'Sri Venkateswara Suprabhatam',
+      file: 'devotional/suprabhatam.mp3',
+      speech: 'Playing your all-time hit 90s devotional morning prayer: M.S. Subbulakshmi’s Sri Venkateswara Suprabhatam.',
       volume: 40
     };
   }
@@ -27,41 +86,32 @@ function getRequestedTrack(request) {
       phase: 'temple_bell',
       title: 'Sacred Bronze Temple Bell',
       file: 'temple-bell-hourly.mp3',
-      speech: 'Ringing the sacred bronze temple bell to bless your home with positive energy.',
+      speech: 'Ringing the sacred bronze temple bell to bless your home.',
       volume: 40
     };
   }
-  if (text.includes('evening') || text.includes('sandhya') || text.includes('pooja') || text.includes('aarti') || text.includes('stotram')) {
+  if (text.includes('evening') || text.includes('sandhya') || text.includes('pooja') || text.includes('aarti')) {
     return {
       phase: 'evening_sandhya',
       title: 'Evening Sandhya Pooja Devotion',
       file: 'evening-sandhya.mp3',
-      speech: 'Playing your Evening Sandhya Pooja devotional melodies with Deeparadhana temple resonances.',
+      speech: 'Playing your Evening Sandhya Pooja devotional melodies.',
       volume: 35
     };
   }
-  if (text.includes('night') || text.includes('sleep') || text.includes('flute') || text.includes('bansuri') || text.includes('krishna')) {
+  if (text.includes('flute') || text.includes('sleep') || text.includes('night')) {
     return {
       phase: 'night_flute',
       title: 'Night Peace & Krishna Bansuri Flute',
       file: 'night-sleep-flute.mp3',
-      speech: 'Starting your calming Krishna Bansuri flute and 528 Hz healing frequencies for peaceful sleep.',
+      speech: 'Starting your calming Krishna Bansuri flute for peaceful rest.',
       volume: 20
-    };
-  }
-  if (text.includes('day') || text.includes('positive') || text.includes('vibe') || text.includes('bird')) {
-    return {
-      phase: 'daytime_positive',
-      title: 'Positive Home Energy & Hourly Bell',
-      file: 'morning-positive.mp3',
-      speech: 'Playing your positive daytime vibration soundscape. Hourly temple chimes will ring to bring peace to your home.',
-      volume: 25
     };
   }
   return null;
 }
 
-function getCurrentPhase(offsetHours = 5.5) { // default IST (+5.5)
+function getCurrentPhase(offsetHours = 5.5) {
   const now = new Date();
   const utc = now.getTime() + (now.getTimezoneOffset() * 60000);
   const targetTime = new Date(utc + (3600000 * offsetHours));
@@ -70,12 +120,13 @@ function getCurrentPhase(offsetHours = 5.5) { // default IST (+5.5)
   const minute = targetTime.getMinutes();
   const timeVal = hour + minute / 60.0;
 
+  // 6:00 AM to 10:00 AM -> M.S. Subbulakshmi Sri Venkateswara Suprabhatam
   if (timeVal >= 6.0 && timeVal < 10.0) {
     return {
       phase: 'morning_devotional',
-      title: '90s Morning Devotional Bliss',
-      file: 'morning-devotional.mp3',
-      speech: 'Good morning! Starting your 90s morning devotional soundscape. Have a blessed day.',
+      title: 'Sri Venkateswara Suprabhatam (M.S. Subbulakshmi)',
+      file: 'devotional/suprabhatam.mp3',
+      speech: 'Good morning! Starting your 90s morning devotional prayer: M.S. Subbulakshmi’s Sri Venkateswara Suprabhatam. Have a blessed day.',
       volume: 40
     };
   } else if (timeVal >= 10.0 && timeVal < 18.0) {
@@ -125,7 +176,7 @@ export default function handler(req, res) {
   const host = req.headers['x-forwarded-host'] || req.headers.host || 'localhost:3000';
   const proto = req.headers['x-forwarded-proto'] || 'https';
   
-  const tzOffset = req.query?.tz ? parseFloat(req.query.tz) : 5.5; // default IST (+5.5)
+  const tzOffset = req.query?.tz ? parseFloat(req.query.tz) : 5.5;
   const current = getCurrentPhase(tzOffset);
   const audioUrl = current.file ? `${proto}://${host}/audio/${current.file}` : null;
   const bellUrl = `${proto}://${host}/audio/temple-bell-hourly.mp3`;
@@ -134,16 +185,17 @@ export default function handler(req, res) {
   if (req.method === 'GET') {
     return res.status(200).json({
       status: 'online',
-      system: 'CalmNature 24-Hour Home Sanctuary Engine',
+      system: 'CalmNature 90s Hit Devotional & Sanctuary Engine',
       currentPhase: current,
       streamUrl: audioUrl,
       hourlyChimeUrl: bellUrl,
-      tracks: [
-        { id: 'morning_devotional', name: '90s Morning Devotional Bliss', file: `${proto}://${host}/audio/morning-devotional.mp3` },
-        { id: 'daytime_positive', name: 'Daytime Positive Home Energy', file: `${proto}://${host}/audio/morning-positive.mp3` },
-        { id: 'temple_bell', name: 'Sacred Bronze Temple Bell', file: `${proto}://${host}/audio/temple-bell-hourly.mp3` },
-        { id: 'evening_sandhya', name: 'Evening Sandhya Pooja Devotion', file: `${proto}://${host}/audio/evening-sandhya.mp3` },
-        { id: 'night_flute', name: 'Night Peace & Krishna Bansuri Flute', file: `${proto}://${host}/audio/night-sleep-flute.mp3` }
+      devotionalSongs: [
+        { id: 'suprabhatam', name: 'Sri Venkateswara Suprabhatam (M.S. Subbulakshmi)', url: `${proto}://${host}/audio/devotional/suprabhatam.mp3` },
+        { id: 'brahmam_okate', name: 'Brahmam Okate (Annamayya)', url: `${proto}://${host}/audio/devotional/brahmam-okate.mp3` },
+        { id: 'muddugare_yashoda', name: 'Muddugare Yashoda (Annamayya)', url: `${proto}://${host}/audio/devotional/muddugare-yashoda.mp3` },
+        { id: 'kondalalo_nelakonna', name: 'Kondalalo Nelakonna (Annamayya)', url: `${proto}://${host}/audio/devotional/kondalalo-nelakonna.mp3` },
+        { id: 'adivo_alladivo', name: 'Adivo Alladivo (Annamayya)', url: `${proto}://${host}/audio/devotional/adivo-alladivo.mp3` },
+        { id: 'sreemannarayana', name: 'Sriman Narayana (Annamayya)', url: `${proto}://${host}/audio/devotional/sreemannarayana.mp3` }
       ]
     });
   }
@@ -153,12 +205,10 @@ export default function handler(req, res) {
   const reqType = request.type;
   const intentName = request.intent?.name;
 
-  // Check if user specifically requested a track (e.g. 90s songs, bell, evening, etc.)
-  const requested = getRequestedTrack(request);
+  const requested = getRequestedSong(request);
   const activeSelection = requested || current;
   const activeUrl = activeSelection.file ? `${proto}://${host}/audio/${activeSelection.file}` : audioUrl;
 
-  // Sleep mode check (only if no specific track was explicitly asked for)
   if (!requested && activeSelection.phase === 'sleep_mode') {
     return res.status(200).json({
       version: '1.0',
@@ -173,7 +223,6 @@ export default function handler(req, res) {
     });
   }
 
-  // Launch Request or Intent Request
   if (reqType === 'LaunchRequest' || reqType === 'IntentRequest') {
     if (intentName === 'AMAZON.PauseIntent' || intentName === 'AMAZON.StopIntent' || intentName === 'AMAZON.CancelIntent') {
       return res.status(200).json({
@@ -242,7 +291,6 @@ export default function handler(req, res) {
     });
   }
 
-  // Infinite Loop
   if (reqType === 'AudioPlayer.PlaybackNearlyFinished') {
     const nextPhase = getCurrentPhase(tzOffset);
     const nextUrl = nextPhase.file ? `${proto}://${host}/audio/${nextPhase.file}` : audioUrl;
