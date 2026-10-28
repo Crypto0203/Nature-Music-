@@ -630,7 +630,6 @@ export default function handler(req, res) {
         return res.status(200).json({
           version: '1.0',
           response: {
-            outputSpeech: { type: 'PlainText', text: currentPhase.speech },
             directives: [
               { type: 'AudioPlayer.ClearQueue', clearBehavior: 'CLEAR_ALL' },
               { type: 'AudioPlayer.Stop' }
@@ -642,41 +641,47 @@ export default function handler(req, res) {
       chosenPlaylist = currentPhase.playlistName;
       chosenIndex = currentPhase.index;
       chosenTrack = currentPhase.track;
-      spokenIntro = currentPhase.speech;
+      spokenIntro = null;
     }
 
     const startToken = buildToken(chosenPlaylist, chosenIndex, 1);
     const startUrl = `${proto}://${host}/audio/${chosenTrack.file}`;
 
-    return res.status(200).json({
-      version: '1.0',
-      response: {
-        outputSpeech: { type: 'PlainText', text: spokenIntro },
-        card: {
-          type: 'Simple',
-          title: `CalmNature: ${chosenTrack.title}`,
-          content: `Playing track ${chosenIndex + 1}: ${chosenTrack.title}`
-        },
-        directives: [
-          {
-            type: 'AudioPlayer.Play',
-            playBehavior: 'REPLACE_ALL',
-            audioItem: {
-              stream: {
-                token: startToken,
-                url: startUrl,
-                offsetInMilliseconds: 0
-              },
-              metadata: {
-                title: chosenTrack.title,
-                subtitle: `Single Hall Volume: ${chosenTrack.volume}%`,
-                art: { sources: [{ url: `${proto}://${host}/favicon.ico` }] }
-              }
+    const responseObj = {
+      card: {
+        type: 'Simple',
+        title: `CalmNature: ${chosenTrack.title}`,
+        content: `Playing track ${chosenIndex + 1}: ${chosenTrack.title}`
+      },
+      directives: [
+        {
+          type: 'AudioPlayer.Play',
+          playBehavior: 'REPLACE_ALL',
+          audioItem: {
+            stream: {
+              token: startToken,
+              url: startUrl,
+              offsetInMilliseconds: 0
+            },
+            metadata: {
+              title: chosenTrack.title,
+              subtitle: `Single Hall Volume: ${chosenTrack.volume}%`,
+              art: { sources: [{ url: `${proto}://${host}/favicon.ico` }] }
             }
           }
-        ],
-        shouldEndSession: true
-      }
+        }
+      ],
+      shouldEndSession: true
+    };
+
+    // Only include speech if a specific song was verbally requested by name
+    if (requested && requested.track.speech) {
+      responseObj.outputSpeech = { type: 'PlainText', text: requested.track.speech };
+    }
+
+    return res.status(200).json({
+      version: '1.0',
+      response: responseObj
     });
   }
 
