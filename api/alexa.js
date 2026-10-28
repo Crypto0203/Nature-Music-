@@ -149,12 +149,37 @@ export const EVENING_PLAYLIST = [
   }
 ];
 
+// Rich 5-track nocturnal healing sanctuary for continuous overnight sleep (No 11 PM shutdown!)
 export const NIGHT_PLAYLIST = [
   {
     id: 'pain_relief_174',
-    title: '174 Hz Mom Pain Relief & Deep Rest',
+    title: '174 Hz Cellular Rest & Natural Pain Relief',
     file: 'healing/174hz-pain-relief.mp3',
-    volume: 25
+    volume: 22
+  },
+  {
+    id: 'night_sleep_flute',
+    title: 'Gentle Nocturnal Flute & Deep Sleep Flow',
+    file: 'night-sleep-flute.mp3',
+    volume: 20
+  },
+  {
+    id: 'om_chanting_432_sleep',
+    title: '432 Hz Sacred Delta Rest & Deep Sleep Waves',
+    file: 'healing/432hz-om-chanting.mp3',
+    volume: 22
+  },
+  {
+    id: 'tibetan_bowls_rest',
+    title: 'Tibetan Singing Bowls Nocturnal Sound Bath',
+    file: 'healing/tibetan-singing-bowls.mp3',
+    volume: 20
+  },
+  {
+    id: 'home_harmony_528_calm',
+    title: '528 Hz Deep Serenity & Cell Repair',
+    file: 'healing/528hz-home-cleanse.mp3',
+    volume: 20
   }
 ];
 
@@ -254,7 +279,7 @@ function matchRequestedSong(request) {
   }
 
   // Healing / night frequencies
-  if (text.includes('174') || text.includes('pain') || text.includes('leg') || text.includes('mom') || text.includes('mother') || text.includes('relief') || text.includes('sleep') || text.includes('night') || text.includes('bedtime')) {
+  if (text.includes('174') || text.includes('pain') || text.includes('leg') || text.includes('mom') || text.includes('mother') || text.includes('relief') || text.includes('sleep') || text.includes('night') || text.includes('bedtime') || text.includes('flute')) {
     return { playlistName: 'night', index: 0, track: NIGHT_PLAYLIST[0] };
   }
 
@@ -285,7 +310,7 @@ function matchRequestedSong(request) {
   return null;
 }
 
-// Accurate Indian Standard Time (IST) 4-Phase selection
+// 24-Hour Continuous Living Sanctuary (Zero 11 PM cutoff — nocturnal healing loops all night)
 function getCurrentPhaseInfo() {
   const istString = new Date().toLocaleString('en-US', { timeZone: 'Asia/Kolkata' });
   const targetTime = new Date(istString);
@@ -294,7 +319,7 @@ function getCurrentPhaseInfo() {
   const minute = targetTime.getMinutes();
   const timeVal = hour + minute / 60.0;
 
-  // Phase 1: Morning (6:00 AM – 8:00 AM) IST
+  // Phase 1: Morning Awakening (6:00 AM – 8:00 AM) IST
   if (timeVal >= 6.0 && timeVal < 8.0) {
     return {
       phase: 'morning_awakening',
@@ -302,7 +327,7 @@ function getCurrentPhaseInfo() {
       index: 0,
       track: MORNING_PLAYLIST[0]
     };
-  // Phase 2: Daytime / Afternoon (8:00 AM – 6:00 PM) IST
+  // Phase 2: Daytime / Afternoon Focus (8:00 AM – 6:00 PM) IST
   } else if (timeVal >= 8.0 && timeVal < 18.0) {
     return {
       phase: 'afternoon_calm',
@@ -318,21 +343,14 @@ function getCurrentPhaseInfo() {
       index: 0,
       track: EVENING_PLAYLIST[0]
     };
-  // Phase 4: Night / Bedtime (7:30 PM – 11:00 PM) IST
-  } else if (timeVal >= 19.5 && timeVal < 23.0) {
+  // Phase 4: Nocturnal Healing & Deep Sleep (7:30 PM – 6:00 AM next morning) IST
+  // Runs all night through 11 PM and past midnight with ZERO shutdown!
+  } else {
     return {
       phase: 'night_healing_sleep',
       playlistName: 'night',
       index: 0,
       track: NIGHT_PLAYLIST[0]
-    };
-  // Late Night: 11:00 PM to 6:00 AM IST -> Quiet Sleep Mode
-  } else {
-    return {
-      phase: 'sleep_mode',
-      playlistName: 'sleep',
-      index: 0,
-      track: null
     };
   }
 }
@@ -354,18 +372,19 @@ export default function handler(req, res) {
   if (req.method === 'GET') {
     return res.status(200).json({
       status: 'online',
-      system: 'CalmNature Sanctuary & Alexa Continuous Multi-Track Audio Engine',
+      system: 'CalmNature Sanctuary & Alexa Continuous 24/7 Audio Engine',
       currentPhase,
       streamUrl: audioUrl,
       hourlyChimeUrl: bellUrl,
       morningTracksTotal: MORNING_PLAYLIST.length,
+      nightTracksTotal: NIGHT_PLAYLIST.length,
       orderedMorningPlaylist: MORNING_PLAYLIST.map((t, idx) => `${idx + 1}. ${t.title}`),
+      orderedNightPlaylist: NIGHT_PLAYLIST.map((t, idx) => `${idx + 1}. ${t.title}`),
       dailyRhythm: {
-        phase1_morning: '06:00 AM – 08:00 AM: Continuous Morning Devotional & Mantras (#1 Suprabhatam -> #2 Jai Ganesh Deva -> Classics -> Mantras last)',
+        phase1_morning: '06:00 AM – 08:00 AM: Continuous Morning Devotional (#1 Suprabhatam -> #2 Jai Ganesh Deva -> Classics -> Mantras)',
         phase2_afternoon: '08:00 AM – 06:00 PM: Calm Focus, 528 Hz Home Harmony & 417 Hz Space Cleansing + Hourly Bell',
         phase3_eveningSandhya: '06:00 PM – 07:30 PM: Clearing Negative Energy (Hanuman Chalisa + Maha Mrityunjaya + Shankh & Bell)',
-        phase4_nightBedtime: '07:30 PM – 11:00 PM: Mom Pain Relief & Deep Sleep (174 Hz Continuous Seamless Loop)',
-        lateNight_sleep: '11:00 PM – 06:00 AM: Quiet Sleep Mode (Auto-Off)'
+        phase4_nightBedtime: '07:30 PM – 06:00 AM: 174 Hz Cellular Rest & 5-Track Deep Sleep Sanctuary (Zero 11 PM cutoff, infinite loop)'
       }
     });
   }
@@ -387,13 +406,43 @@ export default function handler(req, res) {
     return res.status(200).json({ version: '1.0', response: {} });
   }
 
-  // 2. ERROR LOGGING
+  // 2. ERROR LOGGING & AUTOMATIC RESILIENCE RECOVERY
   if (reqType === 'AudioPlayer.PlaybackFailed') {
     console.error('[ALEXA PLAYBACK FAILED ERROR]:', JSON.stringify(request.error || {}));
-    return res.status(200).json({ version: '1.0', response: {} });
+    // Try to auto-recover by playing the next available track
+    const { playlistName, index, counter } = parseToken(activeToken);
+    const playlist = getPlaylistByName(playlistName);
+    const fallbackIndex = (index + 1) % playlist.length;
+    const fallbackTrack = playlist[fallbackIndex];
+    const fallbackToken = buildToken(playlistName, fallbackIndex, counter + 1);
+    const fallbackUrl = `${BASE_URL}/audio/${fallbackTrack.file}`;
+
+    return res.status(200).json({
+      version: '1.0',
+      response: {
+        directives: [
+          {
+            type: 'AudioPlayer.Play',
+            playBehavior: 'REPLACE_ALL',
+            audioItem: {
+              stream: {
+                token: fallbackToken,
+                url: fallbackUrl,
+                offsetInMilliseconds: 0
+              },
+              metadata: {
+                title: fallbackTrack.title,
+                subtitle: `Single Hall Volume: ${fallbackTrack.volume}%`
+              }
+            }
+          }
+        ]
+      }
+    });
   }
 
   // 3. CONTINUOUS MULTI-TRACK QUEUEING (Near end of current song -> ENQUEUE next song)
+  // CRITICAL FIX: Omit expectedPreviousToken so Alexa NEVER drops the queue directive on token delay!
   if (reqType === 'AudioPlayer.PlaybackNearlyFinished') {
     const { playlistName, index, counter } = parseToken(activeToken);
     const playlist = getPlaylistByName(playlistName);
@@ -418,8 +467,7 @@ export default function handler(req, res) {
               stream: {
                 token: nextToken,
                 url: nextUrl,
-                offsetInMilliseconds: 0,
-                expectedPreviousToken: activeToken
+                offsetInMilliseconds: 0
               },
               metadata: {
                 title: nextTrack.title,
@@ -432,7 +480,72 @@ export default function handler(req, res) {
     });
   }
 
-  // 4. VOICE INTENTS & ROUTINE LAUNCH
+  // 4. PLAYBACK CONTROLLER EVENTS (Physical buttons on Echo Dot/Show or Alexa App screen)
+  if (reqType === 'PlaybackController.NextCommandIssued') {
+    const { playlistName, index, counter } = parseToken(activeToken);
+    const playlist = getPlaylistByName(playlistName);
+    const nextIndex = (index + 1) % playlist.length;
+    const nextTrack = playlist[nextIndex];
+    const nextToken = buildToken(playlistName, nextIndex, counter + 1);
+    const nextUrl = `${BASE_URL}/audio/${nextTrack.file}`;
+
+    return res.status(200).json({
+      version: '1.0',
+      response: {
+        directives: [
+          {
+            type: 'AudioPlayer.Play',
+            playBehavior: 'REPLACE_ALL',
+            audioItem: {
+              stream: {
+                token: nextToken,
+                url: nextUrl,
+                offsetInMilliseconds: 0
+              },
+              metadata: {
+                title: nextTrack.title,
+                subtitle: `Single Hall Volume: ${nextTrack.volume}%`
+              }
+            }
+          }
+        ]
+      }
+    });
+  }
+
+  if (reqType === 'PlaybackController.PreviousCommandIssued') {
+    const { playlistName, index, counter } = parseToken(activeToken);
+    const playlist = getPlaylistByName(playlistName);
+    const prevIndex = (index - 1 + playlist.length) % playlist.length;
+    const prevTrack = playlist[prevIndex];
+    const prevToken = buildToken(playlistName, prevIndex, counter + 1);
+    const prevUrl = `${BASE_URL}/audio/${prevTrack.file}`;
+
+    return res.status(200).json({
+      version: '1.0',
+      response: {
+        directives: [
+          {
+            type: 'AudioPlayer.Play',
+            playBehavior: 'REPLACE_ALL',
+            audioItem: {
+              stream: {
+                token: prevToken,
+                url: prevUrl,
+                offsetInMilliseconds: 0
+              },
+              metadata: {
+                title: prevTrack.title,
+                subtitle: `Single Hall Volume: ${prevTrack.volume}%`
+              }
+            }
+          }
+        ]
+      }
+    });
+  }
+
+  // 5. VOICE INTENTS & ROUTINE LAUNCH
   if (reqType === 'LaunchRequest' || reqType === 'IntentRequest') {
     
     // Stop / Cancel / Pause
@@ -586,30 +699,14 @@ export default function handler(req, res) {
     // Check if user requested a specific song or if it's default daily launch
     const requested = matchRequestedSong(request);
 
-    let chosenPlaylist = 'morning';
-    let chosenIndex = 0;
-    let chosenTrack = MORNING_PLAYLIST[0];
+    let chosenPlaylist = currentPhase.playlistName;
+    let chosenIndex = currentPhase.index;
+    let chosenTrack = currentPhase.track;
 
     if (requested) {
       chosenPlaylist = requested.playlistName;
       chosenIndex = requested.index;
       chosenTrack = requested.track;
-    } else {
-      if (currentPhase.phase === 'sleep_mode') {
-        return res.status(200).json({
-          version: '1.0',
-          response: {
-            directives: [
-              { type: 'AudioPlayer.ClearQueue', clearBehavior: 'CLEAR_ALL' },
-              { type: 'AudioPlayer.Stop' }
-            ],
-            shouldEndSession: true
-          }
-        });
-      }
-      chosenPlaylist = currentPhase.playlistName;
-      chosenIndex = currentPhase.index;
-      chosenTrack = currentPhase.track;
     }
 
     const startToken = buildToken(chosenPlaylist, chosenIndex, 1);
