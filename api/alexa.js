@@ -1,8 +1,10 @@
 // =====================================================================
 // 🎙️ CalmNature — Year 2000 Golden Devotional Songs & Sanctuary API
 // Built for Single Hall Living Room + Alexa Echo
-// Continuous Multi-Track AudioPlayer Engine
+// 100% Zero-Touch Automatic Continuous AudioPlayer Engine
 // =====================================================================
+
+const BASE_URL = 'https://nature-music-two.vercel.app';
 
 // --- 1. MASTER PLAYLIST DEFINITIONS ---
 
@@ -11,106 +13,91 @@ export const MORNING_PLAYLIST = [
     id: 'suprabhatam',
     title: 'Sri Venkateswara Suprabhatam (M. S. Subbulakshmi)',
     file: 'devotional/suprabhatam.mp3',
-    volume: 40,
-    speech: 'Good morning! Starting M. S. Subbulakshmi’s legendary Sri Venkateswara Suprabhatam, your first morning awakening puja.'
+    volume: 40
   },
   {
     id: 'jai_ganesh_deva',
     title: 'Jai Ganesh Deva (Anuradha Paudwal)',
     file: 'devotional/jai-ganesh-deva.mp3',
-    volume: 40,
-    speech: 'Playing Jai Ganesh Deva Aarti by Anuradha Paudwal. Ganpati Bappa Morya.'
+    volume: 40
   },
   {
     id: 'manasa_smarami',
     title: 'Sri Venkatesam Manasa Smarami (Year 2000 Master)',
     file: 'devotional/sri-venkatesam-manasa-smarami.mp3',
-    volume: 40,
-    speech: 'Starting Sri Venkatesam Manasa Smarami, Sri Srinivasam Sritha Parijatham. Have a blessed and auspicious day.'
+    volume: 40
   },
   {
     id: 'hanuman_chalisa',
     title: 'Shree Hanuman Chalisa (Hariharan)',
     file: 'devotional/hanuman-chalisa-hariharan.mp3',
-    volume: 40,
-    speech: 'Starting Shree Hanuman Chalisa sung by Hariharan. Jai Bajrangbali.'
+    volume: 40
   },
   {
     id: 'om_jai_jagdish_hare',
     title: 'Om Jai Jagdish Hare (Anuradha Paudwal)',
     file: 'devotional/om-jai-jagdish-hare.mp3',
-    volume: 40,
-    speech: 'Playing Om Jai Jagdish Hare Aarti by Anuradha Paudwal.'
+    volume: 40
   },
   {
     id: 'vishnu_sahasranamam',
     title: 'Vishnu Sahasranamam (M. S. Subbulakshmi)',
     file: 'devotional/vishnu-sahasranamam.mp3',
-    volume: 40,
-    speech: 'Starting Vishnu Sahasranamam sung by M. S. Subbulakshmi. An ancient shield of divine positivity and protection.'
+    volume: 40
   },
   {
     id: 'brahmam_okate',
     title: 'Brahmam Okate (Thandanana)',
     file: 'devotional/brahmam-okate.mp3',
-    volume: 40,
-    speech: 'Playing Brahmam Okate Parabrahmam Okate.'
+    volume: 40
   },
   {
     id: 'muddugare_yashoda',
     title: 'Muddugare Yashoda',
     file: 'devotional/muddugare-yashoda.mp3',
-    volume: 40,
-    speech: 'Playing Muddugare Yashoda.'
+    volume: 40
   },
   {
     id: 'kondalalo_nelakonna',
     title: 'Kondalalo Nelakonna',
     file: 'devotional/kondalalo-nelakonna.mp3',
-    volume: 40,
-    speech: 'Playing Kondalalo Nelakonna Koneti Rayadu.'
+    volume: 40
   },
   {
     id: 'adivo_alladivo',
     title: 'Adivo Alladivo',
     file: 'devotional/adivo-alladivo.mp3',
-    volume: 40,
-    speech: 'Playing Adivo Alladivo Sri Hari Vasamu.'
+    volume: 40
   },
   {
     id: 'sreemannarayana',
     title: 'Sriman Narayana',
     file: 'devotional/sreemannarayana.mp3',
-    volume: 40,
-    speech: 'Playing Sriman Narayana Sriman Narayana.'
+    volume: 40
   },
   {
     id: 'shiva_tandava',
     title: 'Shiva Tandava Stotram (Most Powerful Shiva Mantra)',
     file: 'devotional/shiva-tandava-stotram.mp3',
-    volume: 40,
-    speech: 'Starting the supreme Shiva chant: Shiva Tandava Stotram. Invoking immense positive strength and divine courage.'
+    volume: 40
   },
   {
     id: 'maha_mrityunjaya',
     title: 'Maha Mrityunjaya Mantra 108 Times (Suresh Wadkar & Anuradha Paudwal)',
     file: 'devotional/maha-mrityunjaya-mantra-108.mp3',
-    volume: 40,
-    speech: 'Starting Maha Mrityunjaya Mantra 108 Repetitions. The ultimate healing and protective chant.'
+    volume: 40
   },
   {
     id: 'gayatri_mantra_108',
     title: 'Gayatri Mantra 108 Times (Anuradha Paudwal)',
     file: 'devotional/gayatri-mantra-108.mp3',
-    volume: 40,
-    speech: 'Starting Gayatri Mantra 108 Times for supreme mental clarity and peace.'
+    volume: 40
   },
   {
     id: 'shankh_naad',
     title: 'Sacred Shankh Naad & Temple Bells',
     file: 'devotional/shankh-and-temple-bell.mp3',
-    volume: 45,
-    speech: 'Blowing the sacred Shankh conch with resonant temple bells to reset room energy.'
+    volume: 45
   }
 ];
 
@@ -119,29 +106,25 @@ export const AFTERNOON_PLAYLIST = [
     id: 'home_cleanse_528',
     title: '528 Hz Home Harmony & Positive Vibe',
     file: 'healing/528hz-home-cleanse.mp3',
-    volume: 30,
-    speech: 'Playing 528 Hz transformation frequency to bring harmony and positive vibe into your home.'
+    volume: 30
   },
   {
     id: 'space_cleanse_417',
     title: '417 Hz Negative Energy Dissolver & Space Cleanser',
     file: 'healing/417hz-negative-energy-cleanse.mp3',
-    volume: 30,
-    speech: 'Starting 417 Hz Solfeggio frequency to clear heavy stagnant atmospheres in your home.'
+    volume: 30
   },
   {
     id: 'om_chanting_432',
     title: '432 Hz Sacred OM Chanting for Deep Peace',
     file: 'healing/432hz-om-chanting.mp3',
-    volume: 30,
-    speech: 'Starting 432 Hz deep peace OM chanting for mental tranquility.'
+    volume: 30
   },
   {
     id: 'tibetan_bowls',
     title: 'Tibetan Singing Bowls Sound Bath',
     file: 'healing/tibetan-singing-bowls.mp3',
-    volume: 30,
-    speech: 'Playing Tibetan Singing Bowls sound bath for cellular relaxation.'
+    volume: 30
   }
 ];
 
@@ -150,22 +133,19 @@ export const EVENING_PLAYLIST = [
     id: 'hanuman_chalisa',
     title: 'Shree Hanuman Chalisa (Hariharan)',
     file: 'devotional/hanuman-chalisa-hariharan.mp3',
-    volume: 40,
-    speech: 'Good evening! Starting your Evening Sandhya space clearing with Shree Hanuman Chalisa.'
+    volume: 40
   },
   {
     id: 'maha_mrityunjaya',
     title: 'Maha Mrityunjaya Mantra 108 Times',
     file: 'devotional/maha-mrityunjaya-mantra-108.mp3',
-    volume: 40,
-    speech: 'Continuing Evening Sandhya with Maha Mrityunjaya Mantra 108 Times for deep healing.'
+    volume: 40
   },
   {
     id: 'shankh_naad',
     title: 'Sacred Shankh Naad & Temple Bells',
     file: 'devotional/shankh-and-temple-bell.mp3',
-    volume: 45,
-    speech: 'Resounding the sacred Shankh and temple bells to dissolve twilight negative energy.'
+    volume: 45
   }
 ];
 
@@ -174,8 +154,7 @@ export const NIGHT_PLAYLIST = [
     id: 'pain_relief_174',
     title: '174 Hz Mom Pain Relief & Deep Rest',
     file: 'healing/174hz-pain-relief.mp3',
-    volume: 25,
-    speech: "Starting 174 Hz continuous healing frequency for your mother's leg comfort and deep restorative sleep. Good night."
+    volume: 25
   }
 ];
 
@@ -193,12 +172,13 @@ function getPlaylistByName(name) {
   }
 }
 
-// Parse custom token: calmnature:playlistName:index:counter
+// Token format: calmnature_{playlistName}_{index}_{counter}
 function parseToken(tokenStr) {
   if (!tokenStr || typeof tokenStr !== 'string') {
     return { playlistName: 'morning', index: 0, counter: 1 };
   }
-  const parts = tokenStr.split(':');
+  const clean = tokenStr.replace(/:/g, '_');
+  const parts = clean.split('_');
   if (parts.length >= 4) {
     return {
       playlistName: parts[1] || 'morning',
@@ -210,10 +190,10 @@ function parseToken(tokenStr) {
 }
 
 function buildToken(playlistName, index, counter) {
-  return `calmnature:${playlistName}:${index}:${counter}`;
+  return `calmnature_${playlistName}_${index}_${counter}`;
 }
 
-// Match direct voice query to song & index
+// Match voice query to song & index
 function matchRequestedSong(request) {
   const slots = request.intent?.slots || {};
   let query = '';
@@ -223,10 +203,10 @@ function matchRequestedSong(request) {
   const intentName = (request.intent?.name || '').toLowerCase();
   const text = (query + ' ' + intentName).toLowerCase();
 
-  // Check morning playlist items
+  // Morning playlist matching
   for (let i = 0; i < MORNING_PLAYLIST.length; i++) {
     const item = MORNING_PLAYLIST[i];
-    if (item.id === 'suprabhatam' && (text.includes('suprabhatam') || text.includes('subbulakshmi') || text.includes('first song') || text.includes('1st song') || text.includes('balaji'))) {
+    if (item.id === 'suprabhatam' && (text.includes('suprabhatam') || text.includes('subbulakshmi') || text.includes('first song') || text.includes('1st song') || text.includes('balaji') || text.includes('morning'))) {
       return { playlistName: 'morning', index: i, track: item };
     }
     if (item.id === 'jai_ganesh_deva' && (text.includes('ganesh') || text.includes('ganpati') || text.includes('jai ganesh') || text.includes('second song') || text.includes('next song'))) {
@@ -238,28 +218,28 @@ function matchRequestedSong(request) {
     if (item.id === 'shiva_tandava' && (text.includes('shiva') || text.includes('tandav') || text.includes('tandava') || text.includes('shiva mantra') || text.includes('bholenath') || text.includes('mahadev'))) {
       return { playlistName: 'morning', index: i, track: item };
     }
-    if (item.id === 'maha_mrityunjaya' && (text.includes('mrityunjaya') || text.includes('mrutyunjaya') || text.includes('tryambakam') || text.includes('protective mantra') || text.includes('healing mantra') || text.includes('fear protection'))) {
+    if (item.id === 'maha_mrityunjaya' && (text.includes('mrityunjaya') || text.includes('mrutyunjaya') || text.includes('tryambakam') || text.includes('healing mantra'))) {
       return { playlistName: 'morning', index: i, track: item };
     }
-    if (item.id === 'vishnu_sahasranamam' && (text.includes('sahasranamam') || text.includes('vishnu sahasra') || text.includes('ancient shield'))) {
+    if (item.id === 'vishnu_sahasranamam' && (text.includes('sahasranamam') || text.includes('vishnu sahasra'))) {
       return { playlistName: 'morning', index: i, track: item };
     }
     if (item.id === 'hanuman_chalisa' && (text.includes('hanuman') || text.includes('chalisa') || text.includes('hariharan') || text.includes('bajrangbali'))) {
       return { playlistName: 'morning', index: i, track: item };
     }
-    if (item.id === 'om_jai_jagdish_hare' && (text.includes('jagdish') || text.includes('om jai jagdish') || text.includes('vishnu aarti'))) {
+    if (item.id === 'om_jai_jagdish_hare' && (text.includes('jagdish') || text.includes('om jai jagdish'))) {
       return { playlistName: 'morning', index: i, track: item };
     }
     if (item.id === 'gayatri_mantra_108' && (text.includes('gayatri') || text.includes('gayatri mantra'))) {
       return { playlistName: 'morning', index: i, track: item };
     }
-    if (item.id === 'shankh_naad' && (text.includes('shankh') || text.includes('conch') || text.includes('shankha') || text.includes('blow shankh') || text.includes('space clearing'))) {
+    if (item.id === 'shankh_naad' && (text.includes('shankh') || text.includes('conch') || text.includes('shankha'))) {
       return { playlistName: 'morning', index: i, track: item };
     }
     if (item.id === 'brahmam_okate' && (text.includes('brahmam') || text.includes('thandanana'))) {
       return { playlistName: 'morning', index: i, track: item };
     }
-    if (item.id === 'muddugare_yashoda' && (text.includes('muddugare') || text.includes('yashoda') || text.includes('krishna song'))) {
+    if (item.id === 'muddugare_yashoda' && (text.includes('muddugare') || text.includes('yashoda'))) {
       return { playlistName: 'morning', index: i, track: item };
     }
     if (item.id === 'kondalalo_nelakonna' && (text.includes('kondalalo') || text.includes('koneti'))) {
@@ -274,11 +254,11 @@ function matchRequestedSong(request) {
   }
 
   // Healing / night frequencies
-  if (text.includes('174') || text.includes('pain') || text.includes('leg') || text.includes('mom') || text.includes('mother') || text.includes('relief') || text.includes('deep rest') || text.includes('sleep') || text.includes('night') || text.includes('bedtime') || text.includes('flute')) {
+  if (text.includes('174') || text.includes('pain') || text.includes('leg') || text.includes('mom') || text.includes('mother') || text.includes('relief') || text.includes('sleep') || text.includes('night') || text.includes('bedtime')) {
     return { playlistName: 'night', index: 0, track: NIGHT_PLAYLIST[0] };
   }
 
-  if (text.includes('417') || text.includes('dissolve blockage') || text.includes('negative energy dissolver')) {
+  if (text.includes('417') || text.includes('dissolve blockage') || text.includes('negative energy')) {
     return { playlistName: 'afternoon', index: 1, track: AFTERNOON_PLAYLIST[1] };
   }
 
@@ -290,7 +270,7 @@ function matchRequestedSong(request) {
     return { playlistName: 'afternoon', index: 2, track: AFTERNOON_PLAYLIST[2] };
   }
 
-  if (text.includes('bowl') || text.includes('tibetan') || text.includes('sound bath')) {
+  if (text.includes('bowl') || text.includes('tibetan')) {
     return { playlistName: 'afternoon', index: 3, track: AFTERNOON_PLAYLIST[3] };
   }
 
@@ -298,67 +278,61 @@ function matchRequestedSong(request) {
     return { playlistName: 'evening', index: 0, track: EVENING_PLAYLIST[0] };
   }
 
-  if (text.includes('2000') || text.includes('90') || text.includes('devotion') || text.includes('god song') || text.includes('bhajan') || text.includes('morning song') || text.includes('morning list')) {
+  if (text.includes('2000') || text.includes('90') || text.includes('devotion') || text.includes('god song') || text.includes('bhajan')) {
     return { playlistName: 'morning', index: 0, track: MORNING_PLAYLIST[0] };
   }
 
   return null;
 }
 
-// 4-Phase Daily Rhythm selection
-function getCurrentPhaseInfo(offsetHours = 5.5) {
-  const now = new Date();
-  const utc = now.getTime() + (now.getTimezoneOffset() * 60000);
-  const targetTime = new Date(utc + (3600000 * offsetHours));
+// Accurate Indian Standard Time (IST) 4-Phase selection
+function getCurrentPhaseInfo() {
+  const istString = new Date().toLocaleString('en-US', { timeZone: 'Asia/Kolkata' });
+  const targetTime = new Date(istString);
   
   const hour = targetTime.getHours();
   const minute = targetTime.getMinutes();
   const timeVal = hour + minute / 60.0;
 
-  // Phase 1: Morning (6:00 AM – 8:00 AM)
+  // Phase 1: Morning (6:00 AM – 8:00 AM) IST
   if (timeVal >= 6.0 && timeVal < 8.0) {
     return {
       phase: 'morning_awakening',
       playlistName: 'morning',
       index: 0,
-      track: MORNING_PLAYLIST[0],
-      speech: 'Good morning! Starting your 6:00 AM morning awakening with M. S. Subbulakshmi’s Sri Venkateswara Suprabhatam, followed seamlessly by Jai Ganesh Deva, your devotional classics, and sacred closing mantras. Have a blessed and auspicious day.'
+      track: MORNING_PLAYLIST[0]
     };
-  // Phase 2: Daytime / Afternoon (8:00 AM – 6:00 PM)
+  // Phase 2: Daytime / Afternoon (8:00 AM – 6:00 PM) IST
   } else if (timeVal >= 8.0 && timeVal < 18.0) {
     return {
       phase: 'afternoon_calm',
       playlistName: 'afternoon',
       index: 0,
-      track: AFTERNOON_PLAYLIST[0],
-      speech: 'Starting your Daytime Calm Focus and 528 Hz Home Harmony soundscape. Hourly bronze temple bell chimes will ring every hour on the hour to reset positive energy.'
+      track: AFTERNOON_PLAYLIST[0]
     };
-  // Phase 3: Evening Sandhya (6:00 PM – 7:30 PM)
+  // Phase 3: Evening Sandhya (6:00 PM – 7:30 PM) IST
   } else if (timeVal >= 18.0 && timeVal < 19.5) {
     return {
       phase: 'evening_sandhya',
       playlistName: 'evening',
       index: 0,
-      track: EVENING_PLAYLIST[0],
-      speech: 'Good evening! Starting your Evening Sandhya space clearing with Shree Hanuman Chalisa and sacred temple bells to clear twilight negative energy and bring divine peace into your home.'
+      track: EVENING_PLAYLIST[0]
     };
-  // Phase 4: Night / Bedtime (7:30 PM – 11:00 PM)
+  // Phase 4: Night / Bedtime (7:30 PM – 11:00 PM) IST
   } else if (timeVal >= 19.5 && timeVal < 23.0) {
     return {
       phase: 'night_healing_sleep',
       playlistName: 'night',
       index: 0,
-      track: NIGHT_PLAYLIST[0],
-      speech: "Starting 174 Hz continuous healing frequency for your mother's leg comfort and deep restorative sleep. Good night."
+      track: NIGHT_PLAYLIST[0]
     };
-  // Late Night: 11:00 PM to 6:00 AM -> Quiet Rest / Sleep Mode
+  // Late Night: 11:00 PM to 6:00 AM IST -> Quiet Sleep Mode
   } else {
     return {
       phase: 'sleep_mode',
       playlistName: 'sleep',
       index: 0,
-      track: null,
-      speech: 'Calm Nature is in quiet sleep mode for deep rest until 6:00 AM. Good night.'
+      track: null
     };
   }
 }
@@ -372,13 +346,9 @@ export default function handler(req, res) {
     return res.status(200).end();
   }
 
-  const host = req.headers['x-forwarded-host'] || req.headers.host || 'localhost:3000';
-  const proto = req.headers['x-forwarded-proto'] || 'https';
-  const tzOffset = req.query?.tz ? parseFloat(req.query.tz) : 5.5;
-
-  const currentPhase = getCurrentPhaseInfo(tzOffset);
-  const audioUrl = currentPhase.track ? `${proto}://${host}/audio/${currentPhase.track.file}` : null;
-  const bellUrl = `${proto}://${host}/audio/temple-bell-hourly.mp3`;
+  const currentPhase = getCurrentPhaseInfo();
+  const audioUrl = currentPhase.track ? `${BASE_URL}/audio/${currentPhase.track.file}` : null;
+  const bellUrl = `${BASE_URL}/audio/temple-bell-hourly.mp3`;
 
   // Status / Health check
   if (req.method === 'GET') {
@@ -405,32 +375,37 @@ export default function handler(req, res) {
   const reqType = request.type;
   const intentName = request.intent?.name;
 
-  // Active audio player token from context or request
   const contextAudioPlayer = body.context?.AudioPlayer || {};
   const activeToken = request.token || contextAudioPlayer.token || '';
 
-  // 1. SILENT AUDIO EVENTS (Echo sends these as telemetry; Alexa requires 200 OK without speech)
+  console.log(`[ALEXA INBOUND] Type: ${reqType} | Intent: ${intentName || 'N/A'} | Token: ${activeToken}`);
+
+  // 1. SILENT AUDIO EVENTS (Telemetry sent by Alexa; respond 200 OK without directives)
   if (reqType === 'AudioPlayer.PlaybackStarted' ||
       reqType === 'AudioPlayer.PlaybackFinished' ||
-      reqType === 'AudioPlayer.PlaybackStopped' ||
-      reqType === 'AudioPlayer.PlaybackFailed') {
-    return res.status(200).json({
-      version: '1.0',
-      response: {}
-    });
+      reqType === 'AudioPlayer.PlaybackStopped') {
+    return res.status(200).json({ version: '1.0', response: {} });
   }
 
-  // 2. CONTINUOUS PLAYBACK QUEUEING (Near end of current track -> Pre-queue next track)
+  // 2. ERROR LOGGING
+  if (reqType === 'AudioPlayer.PlaybackFailed') {
+    console.error('[ALEXA PLAYBACK FAILED ERROR]:', JSON.stringify(request.error || {}));
+    return res.status(200).json({ version: '1.0', response: {} });
+  }
+
+  // 3. CONTINUOUS MULTI-TRACK QUEUEING (Near end of current song -> ENQUEUE next song)
   if (reqType === 'AudioPlayer.PlaybackNearlyFinished') {
-    const { playlistName, index, counter } = parseToken(request.token);
+    const { playlistName, index, counter } = parseToken(activeToken);
     const playlist = getPlaylistByName(playlistName);
     
-    // Advance to next track (loop back seamlessly when finished)
+    // Advance to next song (wrap seamlessly when list completes)
     const nextIndex = (index + 1) % playlist.length;
     const nextCounter = counter + 1;
     const nextTrack = playlist[nextIndex];
     const nextToken = buildToken(playlistName, nextIndex, nextCounter);
-    const nextUrl = `${proto}://${host}/audio/${nextTrack.file}`;
+    const nextUrl = `${BASE_URL}/audio/${nextTrack.file}`;
+
+    console.log(`[ALEXA QUEUING NEXT] Track ${nextIndex + 1}/${playlist.length}: ${nextTrack.title} -> Token: ${nextToken}`);
 
     return res.status(200).json({
       version: '1.0',
@@ -444,12 +419,11 @@ export default function handler(req, res) {
                 token: nextToken,
                 url: nextUrl,
                 offsetInMilliseconds: 0,
-                expectedPreviousToken: request.token
+                expectedPreviousToken: activeToken
               },
               metadata: {
                 title: nextTrack.title,
-                subtitle: `Single Hall Volume: ${nextTrack.volume}%`,
-                art: { sources: [{ url: `${proto}://${host}/favicon.ico` }] }
+                subtitle: `Single Hall Volume: ${nextTrack.volume}%`
               }
             }
           }
@@ -458,7 +432,7 @@ export default function handler(req, res) {
     });
   }
 
-  // 3. VOICE INTENTS & LAUNCH
+  // 4. VOICE INTENTS & ROUTINE LAUNCH
   if (reqType === 'LaunchRequest' || reqType === 'IntentRequest') {
     
     // Stop / Cancel / Pause
@@ -475,14 +449,14 @@ export default function handler(req, res) {
       });
     }
 
-    // Next Track ("Alexa, next" / "Alexa, skip")
+    // Skip Next ("Alexa, next")
     if (intentName === 'AMAZON.NextIntent') {
       const { playlistName, index, counter } = parseToken(activeToken);
       const playlist = getPlaylistByName(playlistName);
       const nextIndex = (index + 1) % playlist.length;
       const nextTrack = playlist[nextIndex];
       const nextToken = buildToken(playlistName, nextIndex, counter + 1);
-      const nextUrl = `${proto}://${host}/audio/${nextTrack.file}`;
+      const nextUrl = `${BASE_URL}/audio/${nextTrack.file}`;
 
       return res.status(200).json({
         version: '1.0',
@@ -499,8 +473,7 @@ export default function handler(req, res) {
                 },
                 metadata: {
                   title: nextTrack.title,
-                  subtitle: `Single Hall Volume: ${nextTrack.volume}%`,
-                  art: { sources: [{ url: `${proto}://${host}/favicon.ico` }] }
+                  subtitle: `Single Hall Volume: ${nextTrack.volume}%`
                 }
               }
             }
@@ -510,14 +483,14 @@ export default function handler(req, res) {
       });
     }
 
-    // Previous Track ("Alexa, previous")
+    // Previous Song ("Alexa, previous")
     if (intentName === 'AMAZON.PreviousIntent') {
       const { playlistName, index, counter } = parseToken(activeToken);
       const playlist = getPlaylistByName(playlistName);
       const prevIndex = (index - 1 + playlist.length) % playlist.length;
       const prevTrack = playlist[prevIndex];
       const prevToken = buildToken(playlistName, prevIndex, counter + 1);
-      const prevUrl = `${proto}://${host}/audio/${prevTrack.file}`;
+      const prevUrl = `${BASE_URL}/audio/${prevTrack.file}`;
 
       return res.status(200).json({
         version: '1.0',
@@ -534,8 +507,7 @@ export default function handler(req, res) {
                 },
                 metadata: {
                   title: prevTrack.title,
-                  subtitle: `Single Hall Volume: ${prevTrack.volume}%`,
-                  art: { sources: [{ url: `${proto}://${host}/favicon.ico` }] }
+                  subtitle: `Single Hall Volume: ${prevTrack.volume}%`
                 }
               }
             }
@@ -545,13 +517,13 @@ export default function handler(req, res) {
       });
     }
 
-    // Resume / Start Over
+    // Start Over
     if (intentName === 'AMAZON.StartOverIntent') {
       const { playlistName, index, counter } = parseToken(activeToken);
       const playlist = getPlaylistByName(playlistName);
       const track = playlist[index];
       const currentToken = buildToken(playlistName, index, counter + 1);
-      const currentUrl = `${proto}://${host}/audio/${track.file}`;
+      const currentUrl = `${BASE_URL}/audio/${track.file}`;
 
       return res.status(200).json({
         version: '1.0',
@@ -568,8 +540,7 @@ export default function handler(req, res) {
                 },
                 metadata: {
                   title: track.title,
-                  subtitle: `Single Hall Volume: ${track.volume}%`,
-                  art: { sources: [{ url: `${proto}://${host}/favicon.ico` }] }
+                  subtitle: `Single Hall Volume: ${track.volume}%`
                 }
               }
             }
@@ -579,12 +550,13 @@ export default function handler(req, res) {
       });
     }
 
+    // Resume
     if (intentName === 'AMAZON.ResumeIntent') {
       const { playlistName, index, counter } = parseToken(activeToken);
       const playlist = getPlaylistByName(playlistName);
       const track = playlist[index];
       const resumeToken = buildToken(playlistName, index, counter + 1);
-      const resumeUrl = `${proto}://${host}/audio/${track.file}`;
+      const resumeUrl = `${BASE_URL}/audio/${track.file}`;
 
       return res.status(200).json({
         version: '1.0',
@@ -601,8 +573,7 @@ export default function handler(req, res) {
                 },
                 metadata: {
                   title: track.title,
-                  subtitle: `Single Hall Volume: ${track.volume}%`,
-                  art: { sources: [{ url: `${proto}://${host}/favicon.ico` }] }
+                  subtitle: `Single Hall Volume: ${track.volume}%`
                 }
               }
             }
@@ -618,13 +589,11 @@ export default function handler(req, res) {
     let chosenPlaylist = 'morning';
     let chosenIndex = 0;
     let chosenTrack = MORNING_PLAYLIST[0];
-    let spokenIntro = currentPhase.speech;
 
     if (requested) {
       chosenPlaylist = requested.playlistName;
       chosenIndex = requested.index;
       chosenTrack = requested.track;
-      spokenIntro = requested.track.speech;
     } else {
       if (currentPhase.phase === 'sleep_mode') {
         return res.status(200).json({
@@ -641,47 +610,41 @@ export default function handler(req, res) {
       chosenPlaylist = currentPhase.playlistName;
       chosenIndex = currentPhase.index;
       chosenTrack = currentPhase.track;
-      spokenIntro = null;
     }
 
     const startToken = buildToken(chosenPlaylist, chosenIndex, 1);
-    const startUrl = `${proto}://${host}/audio/${chosenTrack.file}`;
+    const startUrl = `${BASE_URL}/audio/${chosenTrack.file}`;
 
-    const responseObj = {
-      card: {
-        type: 'Simple',
-        title: `CalmNature: ${chosenTrack.title}`,
-        content: `Playing track ${chosenIndex + 1}: ${chosenTrack.title}`
-      },
-      directives: [
-        {
-          type: 'AudioPlayer.Play',
-          playBehavior: 'REPLACE_ALL',
-          audioItem: {
-            stream: {
-              token: startToken,
-              url: startUrl,
-              offsetInMilliseconds: 0
-            },
-            metadata: {
-              title: chosenTrack.title,
-              subtitle: `Single Hall Volume: ${chosenTrack.volume}%`,
-              art: { sources: [{ url: `${proto}://${host}/favicon.ico` }] }
-            }
-          }
-        }
-      ],
-      shouldEndSession: true
-    };
+    console.log(`[ALEXA STARTING PLAYBACK] Playlist: ${chosenPlaylist} | Track: ${chosenTrack.title} | Token: ${startToken}`);
 
-    // Only include speech if a specific song was verbally requested by name
-    if (requested && requested.track.speech) {
-      responseObj.outputSpeech = { type: 'PlainText', text: requested.track.speech };
-    }
-
+    // Direct playback with ZERO robotic English speaking
     return res.status(200).json({
       version: '1.0',
-      response: responseObj
+      response: {
+        card: {
+          type: 'Simple',
+          title: `CalmNature: ${chosenTrack.title}`,
+          content: `Playing track ${chosenIndex + 1}: ${chosenTrack.title}`
+        },
+        directives: [
+          {
+            type: 'AudioPlayer.Play',
+            playBehavior: 'REPLACE_ALL',
+            audioItem: {
+              stream: {
+                token: startToken,
+                url: startUrl,
+                offsetInMilliseconds: 0
+              },
+              metadata: {
+                title: chosenTrack.title,
+                subtitle: `Single Hall Volume: ${chosenTrack.volume}%`
+              }
+            }
+          }
+        ],
+        shouldEndSession: true
+      }
     });
   }
 
