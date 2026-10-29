@@ -197,21 +197,73 @@ function getPlaylistByName(name) {
   }
 }
 
+// 24-Hour Continuous Living Sanctuary (Zero 11 PM cutoff — nocturnal healing loops all night)
+function getCurrentPhaseInfo() {
+  const istString = new Date().toLocaleString('en-US', { timeZone: 'Asia/Kolkata' });
+  const targetTime = new Date(istString);
+  
+  const hour = targetTime.getHours();
+  const minute = targetTime.getMinutes();
+  const timeVal = hour + minute / 60.0;
+
+  // Phase 1: Morning Awakening (6:00 AM – 8:00 AM) IST
+  if (timeVal >= 6.0 && timeVal < 8.0) {
+    return {
+      phase: 'morning_awakening',
+      playlistName: 'morning',
+      index: 0,
+      track: MORNING_PLAYLIST[0]
+    };
+  // Phase 2: Daytime / Afternoon Focus (8:00 AM – 6:00 PM) IST
+  } else if (timeVal >= 8.0 && timeVal < 18.0) {
+    return {
+      phase: 'afternoon_calm',
+      playlistName: 'afternoon',
+      index: 0,
+      track: AFTERNOON_PLAYLIST[0]
+    };
+  // Phase 3: Evening Sandhya (6:00 PM – 7:30 PM) IST
+  } else if (timeVal >= 18.0 && timeVal < 19.5) {
+    return {
+      phase: 'evening_sandhya',
+      playlistName: 'evening',
+      index: 0,
+      track: EVENING_PLAYLIST[0]
+    };
+  // Phase 4: Nocturnal Healing & Deep Sleep (7:30 PM – 6:00 AM next morning) IST
+  // Runs all night through 11 PM and past midnight with ZERO shutdown!
+  } else {
+    return {
+      phase: 'night_healing_sleep',
+      playlistName: 'night',
+      index: 0,
+      track: NIGHT_PLAYLIST[0]
+    };
+  }
+}
+
 // Token format: calmnature_{playlistName}_{index}_{counter}
 function parseToken(tokenStr) {
+  const currentPhase = getCurrentPhaseInfo();
+  const defaultPlaylist = currentPhase.playlistName;
+  const defaultIndex = currentPhase.index;
+
   if (!tokenStr || typeof tokenStr !== 'string') {
-    return { playlistName: 'morning', index: 0, counter: 1 };
+    return { playlistName: defaultPlaylist, index: defaultIndex, counter: 1 };
   }
   const clean = tokenStr.replace(/:/g, '_');
   const parts = clean.split('_');
   if (parts.length >= 4) {
+    const pName = parts[1] || defaultPlaylist;
+    const pIdx = parseInt(parts[2] || '0', 10);
+    const pCount = parseInt(parts[3] || '1', 10);
     return {
-      playlistName: parts[1] || 'morning',
-      index: parseInt(parts[2] || '0', 10),
-      counter: parseInt(parts[3] || '1', 10)
+      playlistName: isNaN(pIdx) ? defaultPlaylist : pName,
+      index: isNaN(pIdx) ? defaultIndex : pIdx,
+      counter: isNaN(pCount) ? 1 : pCount
     };
   }
-  return { playlistName: 'morning', index: 0, counter: 1 };
+  return { playlistName: defaultPlaylist, index: defaultIndex, counter: 1 };
 }
 
 function buildToken(playlistName, index, counter) {
@@ -310,51 +362,6 @@ function matchRequestedSong(request) {
   return null;
 }
 
-// 24-Hour Continuous Living Sanctuary (Zero 11 PM cutoff — nocturnal healing loops all night)
-function getCurrentPhaseInfo() {
-  const istString = new Date().toLocaleString('en-US', { timeZone: 'Asia/Kolkata' });
-  const targetTime = new Date(istString);
-  
-  const hour = targetTime.getHours();
-  const minute = targetTime.getMinutes();
-  const timeVal = hour + minute / 60.0;
-
-  // Phase 1: Morning Awakening (6:00 AM – 8:00 AM) IST
-  if (timeVal >= 6.0 && timeVal < 8.0) {
-    return {
-      phase: 'morning_awakening',
-      playlistName: 'morning',
-      index: 0,
-      track: MORNING_PLAYLIST[0]
-    };
-  // Phase 2: Daytime / Afternoon Focus (8:00 AM – 6:00 PM) IST
-  } else if (timeVal >= 8.0 && timeVal < 18.0) {
-    return {
-      phase: 'afternoon_calm',
-      playlistName: 'afternoon',
-      index: 0,
-      track: AFTERNOON_PLAYLIST[0]
-    };
-  // Phase 3: Evening Sandhya (6:00 PM – 7:30 PM) IST
-  } else if (timeVal >= 18.0 && timeVal < 19.5) {
-    return {
-      phase: 'evening_sandhya',
-      playlistName: 'evening',
-      index: 0,
-      track: EVENING_PLAYLIST[0]
-    };
-  // Phase 4: Nocturnal Healing & Deep Sleep (7:30 PM – 6:00 AM next morning) IST
-  // Runs all night through 11 PM and past midnight with ZERO shutdown!
-  } else {
-    return {
-      phase: 'night_healing_sleep',
-      playlistName: 'night',
-      index: 0,
-      track: NIGHT_PLAYLIST[0]
-    };
-  }
-}
-
 export default function handler(req, res) {
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
@@ -442,7 +449,7 @@ export default function handler(req, res) {
   }
 
   // 3. CONTINUOUS MULTI-TRACK QUEUEING (Near end of current song -> ENQUEUE next song)
-  // CRITICAL FIX: Omit expectedPreviousToken so Alexa NEVER drops the queue directive on token delay!
+  // Amazon ASK Requirement: expectedPreviousToken is MANDATORY for playBehavior: 'ENQUEUE'
   if (reqType === 'AudioPlayer.PlaybackNearlyFinished') {
     const { playlistName, index, counter } = parseToken(activeToken);
     const playlist = getPlaylistByName(playlistName);
@@ -453,8 +460,9 @@ export default function handler(req, res) {
     const nextTrack = playlist[nextIndex];
     const nextToken = buildToken(playlistName, nextIndex, nextCounter);
     const nextUrl = `${BASE_URL}/audio/${nextTrack.file}`;
+    const previousToken = activeToken || buildToken(playlistName, index, counter);
 
-    console.log(`[ALEXA QUEUING NEXT] Track ${nextIndex + 1}/${playlist.length}: ${nextTrack.title} -> Token: ${nextToken}`);
+    console.log(`[ALEXA QUEUING NEXT] Track ${nextIndex + 1}/${playlist.length}: ${nextTrack.title} -> Token: ${nextToken} | ExpectedPrev: ${previousToken}`);
 
     return res.status(200).json({
       version: '1.0',
@@ -467,7 +475,8 @@ export default function handler(req, res) {
               stream: {
                 token: nextToken,
                 url: nextUrl,
-                offsetInMilliseconds: 0
+                offsetInMilliseconds: 0,
+                expectedPreviousToken: previousToken
               },
               metadata: {
                 title: nextTrack.title,
